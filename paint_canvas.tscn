@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddbunjchpywg0"]
+
+[ext_resource type="Script" path="res://paint_canvas.gd" id="1_15b2g"]
+
+[node name="PaintCanvas" type="TextureRect"]
+script = ExtResource("1_15b2g")

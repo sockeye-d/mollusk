@@ -1,0 +1,32 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Pixel Editor"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.2")
+config/icon="res://icon.png"
+
+[display]
+
+window/size/viewport_width=128
+window/size/viewport_height=128
+window/size/window_width_override=1024
+window/size/window_height_override=1024
+window/stretch/mode="viewport"
+
+[dotnet]
+
+project/assembly_name="Pixel Editor"
+
+[physics]
+
+common/physics_ticks_per_second=5
