@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddbunjchpywg0"]
+
+[ext_resource type="Script" path="res://drawing/layer.gd" id="1_0d87r"]
+
+[node name="Layer" type="TextureRect"]
+script = ExtResource("1_0d87r")

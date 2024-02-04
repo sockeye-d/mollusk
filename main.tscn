@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0j42cgttk8kf"]
+[gd_scene load_steps=7 format=3 uid="uid://c0j42cgttk8kf"]
 
-[ext_resource type="PackedScene" uid="uid://ddbunjchpywg0" path="res://paint_canvas.tscn" id="1_3hs6v"]
+[ext_resource type="Theme" uid="uid://5210gar13ap3" path="res://main.theme" id="1_ckeee"]
+[ext_resource type="Script" path="res://gui/triple_split_container.gd" id="1_ojnui"]
+[ext_resource type="Texture2D" uid="uid://0o0udhhbsa0x" path="res://icon.png" id="2_b0gip"]
+[ext_resource type="PackedScene" uid="uid://dys487samleub" path="res://gui/zoom_scroll_container.tscn" id="3_ijncf"]
+[ext_resource type="PackedScene" uid="uid://ddbunjchpywg0" path="res://drawing/layer.tscn" id="4_3xl2x"]
+[ext_resource type="PackedScene" uid="uid://bswbiim02fimm" path="res://gui/triple_split_container.tscn" id="6_l2h7q"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -9,6 +14,98 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_ckeee")
 
-[node name="PaintCanvas" parent="." instance=ExtResource("1_3hs6v")]
-layout_mode = 0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TabBar" type="TabBar" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+tab_count = 4
+tab_alignment = 1
+drag_to_rearrange_enabled = true
+tab_0/title = "file.file"
+tab_1/title = "other file"
+tab_2/title = "asfsfafa"
+tab_3/title = "aaaaaaaaaaaaa"
+
+[node name="TripleSplitContainer" type="SplitContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 100
+script = ExtResource("1_ojnui")
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/TripleSplitContainer"]
+layout_mode = 2
+
+[node name="FlowContainer" type="FlowContainer" parent="VBoxContainer/TripleSplitContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/TripleSplitContainer"]
+layout_mode = 2
+split_offset = 917
+
+[node name="ZoomScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" node_paths=PackedStringArray("node") instance=ExtResource("3_ijncf")]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+default_zoom = 0.5
+node = NodePath("LayerContainer/Layer")
+
+[node name="LayerContainer" type="CenterContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Layer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer/LayerContainer" instance=ExtResource("4_3xl2x")]
+texture_filter = 3
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+texture = ExtResource("2_b0gip")
+expand_mode = 3
+
+[node name="TripleSplitContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" instance=ExtResource("6_l2h7q")]
+layout_mode = 2
+split_offset = -415
+vertical = true
+
+[node name="LayersBox" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/LayersBox"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Button" type="Button" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/LayersBox/HBoxContainer"]
+layout_mode = 2
+text = "new layer"
+
+[node name="LayerTree" type="Tree" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/LayersBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+hide_root = true
+scroll_horizontal_enabled = false
+
+[node name="SplitContainer" type="SplitContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer"]
+layout_mode = 2
+split_offset = 1005
+vertical = true
+
+[node name="Panel" type="Panel" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer"]
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer"]
+layout_mode = 2

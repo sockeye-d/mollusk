@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bswbiim02fimm"]
+
+[ext_resource type="Script" path="res://gui/triple_split_container.gd" id="1_mn5ou"]
+
+[node name="TripleSplitContainer" type="SplitContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_mn5ou")

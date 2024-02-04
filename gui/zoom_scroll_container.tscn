@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dys487samleub"]
+
+[ext_resource type="Script" path="res://gui/zoom_scroll_container.gd" id="1_hrolw"]
+
+[node name="ZoomScrollContainer" type="ScrollContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_hrolw")
