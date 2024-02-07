@@ -1,0 +1,93 @@
+[gd_scene load_steps=7 format=3 uid="uid://caknrd746og7d"]
+
+[ext_resource type="Texture2D" uid="uid://dq6ov335qqxoe" path="res://icons/button_delete.png" id="1_337e3"]
+[ext_resource type="Texture2D" uid="uid://ce0c3wquywww8" path="res://icons/button_up.png" id="1_hc5t2"]
+[ext_resource type="Script" path="res://gui/layer_item.gd" id="1_kk3yf"]
+[ext_resource type="Texture2D" uid="uid://c7q56ysrqjmv7" path="res://icons/button_down.png" id="2_fyc70"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qspc3"]
+bg_color = Color(0.156863, 0.156863, 0.156863, 1)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.156863, 0.156863, 0.156863, 0)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e335a"]
+
+[node name="LayerItem" type="PanelContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 33.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qspc3")
+script = ExtResource("1_kk3yf")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="LineEdit" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Name"
+editable = false
+flat = true
+select_all_on_focus = true
+text_direction = 1
+
+[node name="SelectButton" type="Button" parent="MarginContainer/HBoxContainer/Label"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e335a")
+flat = true
+
+[node name="DeleteButton" type="Button" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(29, 29)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 3
+icon = ExtResource("1_337e3")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="UpButton" type="Button" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(29, 29)
+layout_mode = 2
+size_flags_horizontal = 8
+icon = ExtResource("1_hc5t2")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="DownButton" type="Button" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(29, 29)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 3
+icon = ExtResource("2_fyc70")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="focus_exited" from="MarginContainer/HBoxContainer/Label" to="." method="_on_label_focus_exited"]
+[connection signal="text_submitted" from="MarginContainer/HBoxContainer/Label" to="." method="_on_label_text_submitted"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Label/SelectButton" to="." method="_on_select_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/UpButton" to="." method="_on_up_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/DownButton" to="." method="_on_down_button_pressed"]

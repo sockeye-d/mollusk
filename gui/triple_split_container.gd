@@ -13,4 +13,3 @@ func _process(delta: float) -> void:
 				var split_container := child as SplitContainer
 				split_container.split_offset += offset_offset
 	_last_split_offset = split_offset
-

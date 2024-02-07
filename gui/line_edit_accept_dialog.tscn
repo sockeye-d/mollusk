@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://cu6ajiym7cah6"]
+
+[ext_resource type="Script" path="res://gui/line_edit_accept_dialog.gd" id="1_q7isn"]
+
+[node name="LineEditAcceptDialog" type="AcceptDialog"]
+initial_position = 2
+size = Vector2i(366, 100)
+popup_window = true
+dialog_hide_on_ok = false
+dialog_close_on_escape = false
+script = ExtResource("1_q7isn")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 358.0
+offset_bottom = 51.0
+
+[connection signal="confirmed" from="." to="." method="_on_confirmed"]

@@ -3,11 +3,13 @@ class_name Layer
 
 
 @export var drawable: bool = false
+@export var layer_name: String
 var canvas: ImageExt
 
 
-func _init(size: Vector2i) -> void:
-	canvas = ImageExt.new(Image.create(size.x, size.y, false, Image.FORMAT_RGBA8))
+func create(layer_size: Vector2i, layer_name: String) -> void:
+	canvas = ImageExt.new(Image.create(layer_size.x, layer_size.y, false, Image.FORMAT_RGBA8))
+	self.layer_name = layer_name
 
 
 func _ready() -> void:
