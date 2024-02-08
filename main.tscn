@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0j42cgttk8kf"]
+[gd_scene load_steps=8 format=3 uid="uid://c0j42cgttk8kf"]
 
 [ext_resource type="Theme" uid="uid://5210gar13ap3" path="res://main.theme" id="1_ckeee"]
 [ext_resource type="Script" path="res://gui/triple_split_container.gd" id="1_ojnui"]
 [ext_resource type="PackedScene" uid="uid://dys487samleub" path="res://gui/zoom_scroll_container.tscn" id="3_ijncf"]
+[ext_resource type="PackedScene" uid="uid://bhorctvfjx5s8" path="res://gui/dual_color_picker.tscn" id="5_r05td"]
 [ext_resource type="PackedScene" uid="uid://bswbiim02fimm" path="res://gui/triple_split_container.tscn" id="6_l2h7q"]
 [ext_resource type="Script" path="res://add_layer_button.gd" id="7_uawcc"]
 [ext_resource type="PackedScene" uid="uid://cu6ajiym7cah6" path="res://gui/line_edit_accept_dialog.tscn" id="8_tvwon"]
@@ -41,7 +42,7 @@ tab_3/title = "aaaaaaaaaaaaa"
 [node name="TripleSplitContainer" type="SplitContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-split_offset = 100
+split_offset = 200
 script = ExtResource("1_ojnui")
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/TripleSplitContainer"]
@@ -52,61 +53,81 @@ layout_mode = 2
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/TripleSplitContainer"]
 layout_mode = 2
-split_offset = 917
+split_offset = 685
 
-[node name="ZoomScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" node_paths=PackedStringArray("node") instance=ExtResource("3_ijncf")]
+[node name="ZoomScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" instance=ExtResource("3_ijncf")]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 default_zoom = 0.5
-node = NodePath("")
 
 [node name="LayerContainer" type="CenterContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 6
+size_flags_vertical = 6
 
 [node name="TripleSplitContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" instance=ExtResource("6_l2h7q")]
 layout_mode = 2
-split_offset = -415
+split_offset = 205
 vertical = true
 
-[node name="LayersBox" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer"]
+[node name="ColorPickerContainer" type="PanelContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer"]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="LayerTools" type="HBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/LayersBox"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="AddLayerButton" type="Button" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/LayersBox/LayerTools"]
-layout_mode = 2
-text = "new layer"
-script = ExtResource("7_uawcc")
-
-[node name="LineEditAcceptDialog" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/LayersBox/LayerTools/AddLayerButton" instance=ExtResource("8_tvwon")]
-
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/LayersBox"]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="LayerList" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/LayersBox/ScrollContainer"]
-unique_name_in_owner = true
+[node name="DualColorPicker" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/ColorPickerContainer" instance=ExtResource("5_r05td")]
 layout_mode = 2
 
 [node name="SplitContainer" type="SplitContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer"]
 layout_mode = 2
-split_offset = 1005
+split_offset = 205
 vertical = true
 
-[node name="Panel" type="Panel" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer"]
 layout_mode = 2
 
-[node name="Panel2" type="Panel" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer2"]
 layout_mode = 2
 
-[connection signal="pressed" from="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/LayersBox/LayerTools/AddLayerButton" to="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/LayersBox/LayerTools/AddLayerButton" method="_on_pressed"]
-[connection signal="text_confirmed" from="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/LayersBox/LayerTools/AddLayerButton/LineEditAcceptDialog" to="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/LayersBox/LayerTools/AddLayerButton" method="_on_line_edit_accept_dialog_text_confirmed"]
+[node name="Button" type="Button" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer2/VBoxContainer"]
+layout_mode = 2
+text = "my button"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FlowContainer" type="FlowContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer2/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer"]
+layout_mode = 2
+
+[node name="LayersBox" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LayerTools" type="HBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="AddLayerButton" type="Button" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools"]
+layout_mode = 2
+text = "new layer"
+script = ExtResource("7_uawcc")
+
+[node name="LineEditAcceptDialog" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton" instance=ExtResource("8_tvwon")]
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="LayerList" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="pressed" from="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton" to="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton" method="_on_pressed"]
+[connection signal="text_confirmed" from="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton/LineEditAcceptDialog" to="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton" method="_on_line_edit_accept_dialog_text_confirmed"]

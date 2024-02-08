@@ -21,8 +21,9 @@ var layer_item_container: Node
 
 
 func _ready() -> void:
-	layer_container = get_tree().root.get_node("Main").get_node("%LayerContainer")
-	layer_item_container = get_tree().root.get_node("Main").get_node("%LayerList")
+	if get_tree().root.has_node("Main"):
+		layer_container = get_tree().root.get_node("Main").get_node("%LayerContainer")
+		layer_item_container = get_tree().root.get_node("Main").get_node("%LayerList")
 
 
 func add_layer(size: Vector2i, layer_name: String) -> void:

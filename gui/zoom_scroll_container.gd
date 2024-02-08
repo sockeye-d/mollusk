@@ -26,4 +26,5 @@ func _input(event: InputEvent) -> void:
 
 
 func _update_node_zoom():
-	node.custom_minimum_size.y = size[size.min_axis_index()] * zoom
+	if node:
+		node.custom_minimum_size = size * zoom
