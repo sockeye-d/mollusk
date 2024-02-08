@@ -55,18 +55,23 @@ layout_mode = 2
 layout_mode = 2
 split_offset = 685
 
-[node name="ZoomScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" instance=ExtResource("3_ijncf")]
+[node name="ZoomScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" node_paths=PackedStringArray("node") instance=ExtResource("3_ijncf")]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 default_zoom = 0.5
+node = NodePath("LayerCenterContainer/LayerContainer")
 
-[node name="LayerContainer" type="CenterContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer"]
-unique_name_in_owner = true
+[node name="LayerCenterContainer" type="CenterContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer"]
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LayerContainer" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer/LayerCenterContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
 
 [node name="TripleSplitContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" instance=ExtResource("6_l2h7q")]
 layout_mode = 2

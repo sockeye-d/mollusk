@@ -4,22 +4,23 @@ class_name Layer
 
 @export var drawable: bool = false
 @export var layer_name: String
+
+
 var canvas: ImageExt
+var local_mouse_norm: Vector2:
+	get:
+		return get_global_transform().affine_inverse() * get_global_mouse_position() / size[size.max_axis_index()]
+var local_mouse: Vector2i:
+	get:
+		return Vector2i(local_mouse_norm * canvas.size)
 
 
-func create(layer_size: Vector2i, layer_name: String) -> void:
+func create(layer_size: Vector2i, _layer_name: String) -> void:
 	canvas = ImageExt.new(Image.create(layer_size.x, layer_size.y, false, Image.FORMAT_RGBA8))
-	self.layer_name = layer_name
+	canvas.image.fill(Color.TRANSPARENT)
+	layer_name = _layer_name
+	texture = ImageTexture.create_from_image(canvas.image)
 
 
-func _ready() -> void:
-	canvas = ImageExt.new(Image.create(64, 64, false, Image.FORMAT_RGBA8))
-	#texture = ImageTexture.create_from_image(canvas.image)
-
-
-func _process(_delta: float) -> void:
-	canvas.image.fill(Color.TEAL)
-	canvas.draw_line(Vector2i(32, 32), get_local_mouse_position() as Vector2i, Color8(0, 0, 0, 127))
-	#canvas.draw_line_thick(Vector2i(32, 32), get_local_mouse_position() as Vector2i, 0, Color8(0, 0, 0, 127))
-	#canvas.draw_rect(Rect2i(Vector2i(32, 32), (get_local_mouse_position() as Vector2i - Vector2i(32, 32))), Color8(0, 0, 0, 127), true )
-	#texture.update(canvas.image)
+func update():
+	texture.update(canvas.image)

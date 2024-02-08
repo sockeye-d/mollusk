@@ -5,7 +5,7 @@ class_name TripleSplitContainer
 var _last_split_offset: int = split_offset
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var offset_offset: int = _last_split_offset - split_offset
 	if not offset_offset == 0:
 		for child in get_children():

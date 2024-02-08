@@ -30,13 +30,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if not name_input.has_focus():
-		if last_clicked_time > 0.2 or not selected:
-			last_clicked_time = -1.0
-			name_input_select_button.show()
-			name_input.editable = false
-		else:
-			last_clicked_time += delta
+	name_input_select_button.visible = not selected
+	name_input.editable = selected
 	
 	if selected:
 		modulate = Color(1.5, 1.5, 1.5)
@@ -46,10 +41,6 @@ func _process(delta: float) -> void:
 
 func _on_select_button_pressed() -> void:
 	Layers.select_layer(Layers.get_layer_index(self))
-	if last_clicked_time < 0.0:
-		last_clicked_time = 0.0
-		name_input_select_button.hide()
-		name_input.editable = true
 
 
 func _on_delete_button_pressed() -> void:
@@ -66,11 +57,9 @@ func _on_down_button_pressed() -> void:
 
 func _on_label_text_submitted(new_text: String) -> void:
 	layer_name = new_text
-	name_input_select_button.show()
-	name_input.editable = false
+	name_input.release_focus()
 
 
 func _on_label_focus_exited() -> void:
 	layer_name = name_input.text
-	name_input_select_button.show()
-	name_input.editable = false
+	name_input.release_focus()

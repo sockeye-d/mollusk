@@ -18,9 +18,10 @@ var active_color: Color:
 func _ready() -> void:
 	$SwapButton.pressed.connect(swap_colors)
 	$SwapButton2.pressed.connect(swap_colors)
+	
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	colors[COLOR_FG] = $ColorPickerFG.color
 	colors[COLOR_BG] = $ColorPickerBG.color
 

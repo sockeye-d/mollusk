@@ -1,11 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhorctvfjx5s8"]
+[gd_scene load_steps=8 format=3 uid="uid://bhorctvfjx5s8"]
 
 [ext_resource type="Texture2D" uid="uid://cksufs7lm7c0i" path="res://icons/button_swap_0.png" id="1_howq7"]
 [ext_resource type="Script" path="res://gui/dual_color_picker.gd" id="1_lvtgu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_anxfa"]
 
+[sub_resource type="InputEventAction" id="InputEventAction_4tnnx"]
+action = &"swap_colors"
+
+[sub_resource type="Shortcut" id="Shortcut_pujrd"]
+events = [SubResource("InputEventAction_4tnnx")]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5lry1"]
+
+[sub_resource type="Shortcut" id="Shortcut_pevos"]
+events = [SubResource("InputEventAction_4tnnx")]
 
 [node name="DualColorPicker" type="Control"]
 layout_mode = 3
@@ -54,6 +63,7 @@ offset_left = -25.0
 offset_bottom = 25.0
 grow_horizontal = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_anxfa")
+shortcut = SubResource("Shortcut_pujrd")
 icon = ExtResource("1_howq7")
 flat = true
 expand_icon = true
@@ -70,6 +80,7 @@ grow_vertical = 0
 rotation = 3.14159
 pivot_offset = Vector2(12.5, 12.5)
 theme_override_styles/focus = SubResource("StyleBoxEmpty_5lry1")
+shortcut = SubResource("Shortcut_pevos")
 icon = ExtResource("1_howq7")
 flat = true
 expand_icon = true

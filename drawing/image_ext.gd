@@ -3,6 +3,10 @@ class_name ImageExt
 
 @export var image: Image
 
+var size: Vector2:
+	get:
+		return Vector2(image.get_size())
+
 
 func _init(in_image: Image) -> void:
 	image = in_image
@@ -65,7 +69,6 @@ func _get_line_points(p0: Vector2i, p1: Vector2i, double_pixels: bool = false) -
 	d.y = -d.y
 	var s: Vector2i = sign(p1 - p0)
 	var err: int = d.x + d.y
-	var is_high_line: bool = -d.y > d.x
 	
 	for i in max(d.x, -d.y) + 1:
 		arr.merge({p : null})

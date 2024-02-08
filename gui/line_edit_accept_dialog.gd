@@ -14,4 +14,5 @@ signal text_confirmed(text: String)
 
 func _on_confirmed() -> void:
 	text_confirmed.emit($LineEdit.text)
+	$LineEdit.text = ""
 	hide()

@@ -43,7 +43,6 @@ text = "Name"
 editable = false
 flat = true
 select_all_on_focus = true
-text_direction = 1
 
 [node name="SelectButton" type="Button" parent="MarginContainer/HBoxContainer/Label"]
 show_behind_parent = true
