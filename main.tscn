@@ -1,12 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://c0j42cgttk8kf"]
+[gd_scene load_steps=9 format=3 uid="uid://c0j42cgttk8kf"]
 
 [ext_resource type="Theme" uid="uid://5210gar13ap3" path="res://main.theme" id="1_ckeee"]
 [ext_resource type="Script" path="res://gui/triple_split_container.gd" id="1_ojnui"]
 [ext_resource type="PackedScene" uid="uid://dys487samleub" path="res://gui/zoom_scroll_container.tscn" id="3_ijncf"]
+[ext_resource type="Shader" path="res://gui/checkers.gdshader" id="4_tjg52"]
 [ext_resource type="PackedScene" uid="uid://bhorctvfjx5s8" path="res://gui/dual_color_picker.tscn" id="5_r05td"]
 [ext_resource type="PackedScene" uid="uid://bswbiim02fimm" path="res://gui/triple_split_container.tscn" id="6_l2h7q"]
 [ext_resource type="Script" path="res://add_layer_button.gd" id="7_uawcc"]
-[ext_resource type="PackedScene" uid="uid://cu6ajiym7cah6" path="res://gui/line_edit_accept_dialog.tscn" id="8_tvwon"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ght6q"]
+shader = ExtResource("4_tjg52")
+shader_parameter/size = 0.02
+shader_parameter/color_0 = Color(0.172549, 0.172549, 0.172549, 1)
+shader_parameter/color_1 = Color(0.121569, 0.121569, 0.121569, 1)
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -16,6 +22,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ckeee")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -69,9 +83,27 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="LayerContainer" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer/LayerCenterContainer"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
+material = SubResource("ShaderMaterial_ght6q")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LayerContainer" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TripleSplitContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" instance=ExtResource("6_l2h7q")]
 layout_mode = 2
@@ -81,7 +113,8 @@ vertical = true
 [node name="ColorPickerContainer" type="PanelContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer"]
 layout_mode = 2
 
-[node name="DualColorPicker" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/ColorPickerContainer" instance=ExtResource("5_r05td")]
+[node name="ColorPicker" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/ColorPickerContainer" instance=ExtResource("5_r05td")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="SplitContainer" type="SplitContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer"]
@@ -122,8 +155,6 @@ layout_mode = 2
 text = "new layer"
 script = ExtResource("7_uawcc")
 
-[node name="LineEditAcceptDialog" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton" instance=ExtResource("8_tvwon")]
-
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
@@ -135,4 +166,3 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [connection signal="pressed" from="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton" to="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton" method="_on_pressed"]
-[connection signal="text_confirmed" from="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton/LineEditAcceptDialog" to="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton" method="_on_line_edit_accept_dialog_text_confirmed"]

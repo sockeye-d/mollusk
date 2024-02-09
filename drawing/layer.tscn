@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddbunjchpywg0"]
+[gd_scene load_steps=4 format=3 uid="uid://ddbunjchpywg0"]
 
 [ext_resource type="Script" path="res://drawing/layer.gd" id="1_0d87r"]
+[ext_resource type="Shader" path="res://drawing/layer.gdshader" id="1_0jmjl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b5b2l"]
+shader = ExtResource("1_0jmjl")
 
 [node name="Layer" type="TextureRect"]
+texture_filter = 4
+material = SubResource("ShaderMaterial_b5b2l")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

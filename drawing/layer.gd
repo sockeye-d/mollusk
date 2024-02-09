@@ -15,9 +15,9 @@ var local_mouse: Vector2i:
 		return Vector2i(local_mouse_norm * canvas.size)
 
 
-func create(layer_size: Vector2i, _layer_name: String) -> void:
+func create(layer_size: Vector2i, _layer_name: String, fill: Color) -> void:
 	canvas = ImageExt.new(Image.create(layer_size.x, layer_size.y, false, Image.FORMAT_RGBA8))
-	canvas.image.fill(Color.TRANSPARENT)
+	canvas.image.fill(fill)
 	layer_name = _layer_name
 	texture = ImageTexture.create_from_image(canvas.image)
 

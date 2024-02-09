@@ -1,6 +1,9 @@
 extends Button
 
 
+@export var dialog: PackedScene
+
+
 func _on_pressed() -> void:
 	$LineEditAcceptDialog.popup_centered()
 
