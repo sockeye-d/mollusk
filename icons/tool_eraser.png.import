@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ce0c3wquywww8"
-path="res://.godot/imported/button_up.png-a8e631d0edcf74d7d6b2010e57a5efcd.ctex"
+uid="uid://bm3lr61pekwot"
+path="res://.godot/imported/tool_eraser.png-b287d3e60e980c72cda8934fad2c5749.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icons/button_up.png"
-dest_files=["res://.godot/imported/button_up.png-a8e631d0edcf74d7d6b2010e57a5efcd.ctex"]
+source_file="res://icons/tool_eraser.png"
+dest_files=["res://.godot/imported/tool_eraser.png-b287d3e60e980c72cda8934fad2c5749.ctex"]
 
 [params]
 

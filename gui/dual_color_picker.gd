@@ -9,12 +9,16 @@ enum {
 
 
 var colors: Array[Color] = [Color.WHITE, Color.BLACK]
-var active_color: Color:
+var fg: Color:
 	set(value):
-		colors[0] = value
+		colors[COLOR_FG] = value
 	get:
-		return colors[0]
-
+		return colors[COLOR_FG]
+var bg: Color:
+	set(value):
+		colors[COLOR_BG] = value
+	get:
+		return colors[COLOR_BG]
 
 func _ready() -> void:
 	$SwapButton.pressed.connect(swap_colors)

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Tool" load_steps=5 format=3 uid="uid://50wlh3p5tpxk"]
+
+[ext_resource type="Script" path="res://tools/tool.gd" id="1_5t81d"]
+[ext_resource type="Texture2D" uid="uid://bm3lr61pekwot" path="res://icons/tool_eraser.png" id="1_6kt3i"]
+[ext_resource type="Script" path="res://tools/tool_settings/slider_tool_setting.gd" id="2_5c5yg"]
+
+[sub_resource type="Resource" id="Resource_subq2"]
+script = ExtResource("2_5c5yg")
+min = 0.0
+max = 100.0
+step = 1.0
+default_value = 100.0
+label = "strength"
+
+[resource]
+script = ExtResource("1_5t81d")
+icon = ExtResource("1_6kt3i")
+name = "Eraser"
+tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([SubResource("Resource_subq2")])

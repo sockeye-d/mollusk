@@ -13,7 +13,6 @@ var layer_item_scene: PackedScene = preload("res://gui/layer_item.tscn")
 
 var layer_container: Node
 var layer_item_container: Node
-var color_picker: DualColorPicker
 
 
 var selected_layer_item: LayerItem
@@ -23,21 +22,14 @@ var _layers: Array[LayerItem]
 
 func _ready() -> void:
 	if get_tree().root.has_node("Main"):
-		layer_container = get_tree().root.get_node("Main").get_node("%LayerContainer")
-		layer_item_container = get_tree().root.get_node("Main").get_node("%LayerList")
-		color_picker = get_tree().root.get_node("Main").get_node("%ColorPicker")
+		layer_container = Nodes.get_unique_node("LayerContainer")
+		layer_item_container = Nodes.get_unique_node("LayerList")
 
 
-func _process(delta: float) -> void:
-	if not selected_layer_item == null:
-		selected_layer.canvas.draw_pixel(selected_layer.local_mouse, color_picker.active_color)
-		selected_layer.update()
-
-
-func add_layer(size: Vector2i, layer_name: String) -> void:
+func add_layer(size: Vector2i, layer_name: String, fill_color: Color) -> void:
 	size = Vector2i(64, 64)
 	var layer: Layer = layer_scene.instantiate() as Layer
-	layer.create(size, layer_name)
+	layer.create(size, layer_name, fill_color)
 	layer_container.add_child(layer)
 	var layer_item: LayerItem = layer_item_scene.instantiate() as LayerItem
 	layer_item.create(layer_name)

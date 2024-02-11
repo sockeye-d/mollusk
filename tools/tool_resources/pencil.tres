@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Tool" load_steps=6 format=3 uid="uid://c1k2go44eqy0d"]
+
+[ext_resource type="Script" path="res://tools/tool_draw_scripts/pencil_draw_script.gd" id="1_dh0uc"]
+[ext_resource type="Texture2D" uid="uid://chdd6g7434kwd" path="res://icons/tool_pencil.png" id="1_fcfwg"]
+[ext_resource type="Script" path="res://tools/tool.gd" id="1_iaxyb"]
+[ext_resource type="Script" path="res://tools/tool_settings/checkbox_tool_setting.gd" id="2_2ktag"]
+
+[sub_resource type="Resource" id="Resource_t6ljw"]
+script = ExtResource("2_2ktag")
+default_value = true
+label = "blend"
+
+[resource]
+script = ExtResource("1_iaxyb")
+icon = ExtResource("1_fcfwg")
+name = "Pencil"
+tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([SubResource("Resource_t6ljw")])
+draw_script = ExtResource("1_dh0uc")

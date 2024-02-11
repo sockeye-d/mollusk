@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Tool" load_steps=2 format=3 uid="uid://bno11fcjlg8ly"]
+
+[ext_resource type="Script" path="res://tools/tool.gd" id="1_xk77f"]
+
+[resource]
+script = ExtResource("1_xk77f")
+name = "Line"
+tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([])

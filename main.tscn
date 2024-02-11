@@ -1,12 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0j42cgttk8kf"]
+[gd_scene load_steps=17 format=3 uid="uid://c0j42cgttk8kf"]
 
 [ext_resource type="Theme" uid="uid://5210gar13ap3" path="res://main.theme" id="1_ckeee"]
 [ext_resource type="Script" path="res://gui/triple_split_container.gd" id="1_ojnui"]
+[ext_resource type="Texture2D" uid="uid://chdd6g7434kwd" path="res://icons/tool_pencil.png" id="3_4fvpl"]
 [ext_resource type="PackedScene" uid="uid://dys487samleub" path="res://gui/zoom_scroll_container.tscn" id="3_ijncf"]
+[ext_resource type="Texture2D" uid="uid://bm3lr61pekwot" path="res://icons/tool_eraser.png" id="4_lhgcg"]
+[ext_resource type="Script" path="res://tools/tool_button.gd" id="4_s7tdj"]
 [ext_resource type="Shader" path="res://gui/checkers.gdshader" id="4_tjg52"]
+[ext_resource type="Resource" uid="uid://c1k2go44eqy0d" path="res://tools/tool_resources/pencil.tres" id="5_5q827"]
+[ext_resource type="Texture2D" uid="uid://c1hbtn863wcje" path="res://icons/tool_line.png" id="5_ilw3x"]
 [ext_resource type="PackedScene" uid="uid://bhorctvfjx5s8" path="res://gui/dual_color_picker.tscn" id="5_r05td"]
 [ext_resource type="PackedScene" uid="uid://bswbiim02fimm" path="res://gui/triple_split_container.tscn" id="6_l2h7q"]
+[ext_resource type="Texture2D" uid="uid://cpkv08k70f1ht" path="res://icons/tool_fill.png" id="6_tk6px"]
+[ext_resource type="Resource" uid="uid://50wlh3p5tpxk" path="res://tools/tool_resources/eraser.tres" id="7_iw2dd"]
 [ext_resource type="Script" path="res://add_layer_button.gd" id="7_uawcc"]
+[ext_resource type="Resource" uid="uid://cyb3g0fgdq34c" path="res://tools/tool_resources/bucket_fill.tres" id="10_h563c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ght6q"]
 shader = ExtResource("4_tjg52")
@@ -53,17 +61,82 @@ tab_1/title = "other file"
 tab_2/title = "asfsfafa"
 tab_3/title = "aaaaaaaaaaaaa"
 
-[node name="TripleSplitContainer" type="SplitContainer" parent="VBoxContainer"]
+[node name="TripleSplitContainer" type="SplitContainer" parent="VBoxContainer" node_paths=PackedStringArray("secondary_split_container")]
 layout_mode = 2
 size_flags_vertical = 3
 split_offset = 200
 script = ExtResource("1_ojnui")
+secondary_split_container = NodePath("HSplitContainer")
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/TripleSplitContainer"]
+[node name="SplitContainer" type="SplitContainer" parent="VBoxContainer/TripleSplitContainer"]
+layout_mode = 2
+vertical = true
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer"]
 layout_mode = 2
 
-[node name="FlowContainer" type="FlowContainer" parent="VBoxContainer/TripleSplitContainer/PanelContainer"]
+[node name="ToolTray" type="FlowContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/PanelContainer"]
 layout_mode = 2
+
+[node name="Pencil" type="Button" parent="VBoxContainer/TripleSplitContainer/SplitContainer/PanelContainer/ToolTray"]
+texture_filter = 4
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+icon = ExtResource("3_4fvpl")
+flat = true
+expand_icon = true
+script = ExtResource("4_s7tdj")
+tool = ExtResource("5_5q827")
+
+[node name="Eraser" type="Button" parent="VBoxContainer/TripleSplitContainer/SplitContainer/PanelContainer/ToolTray"]
+texture_filter = 4
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+icon = ExtResource("4_lhgcg")
+flat = true
+expand_icon = true
+script = ExtResource("4_s7tdj")
+tool = ExtResource("7_iw2dd")
+
+[node name="Line" type="Button" parent="VBoxContainer/TripleSplitContainer/SplitContainer/PanelContainer/ToolTray"]
+texture_filter = 4
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+icon = ExtResource("5_ilw3x")
+flat = true
+expand_icon = true
+script = ExtResource("4_s7tdj")
+
+[node name="BucketFill" type="Button" parent="VBoxContainer/TripleSplitContainer/SplitContainer/PanelContainer/ToolTray"]
+texture_filter = 4
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+icon = ExtResource("6_tk6px")
+flat = true
+expand_icon = true
+script = ExtResource("4_s7tdj")
+tool = ExtResource("10_h563c")
+
+[node name="ToolSettingsContainer" type="PanelContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ToolLabelContainer" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ToolValueContainer" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/TripleSplitContainer"]
 layout_mode = 2
@@ -97,7 +170,6 @@ grow_vertical = 2
 
 [node name="LayerContainer" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -105,10 +177,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TripleSplitContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" instance=ExtResource("6_l2h7q")]
+[node name="TripleSplitContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" node_paths=PackedStringArray("secondary_split_container") instance=ExtResource("6_l2h7q")]
 layout_mode = 2
 split_offset = 205
 vertical = true
+secondary_split_container = NodePath("SplitContainer")
 
 [node name="ColorPickerContainer" type="PanelContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer"]
 layout_mode = 2

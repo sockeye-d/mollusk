@@ -1,12 +1,15 @@
 extends Button
 
 
-@export var dialog: PackedScene
+@export var dialog_scene: PackedScene = preload("res://gui/new_layer_dialog.tscn")
 
 
 func _on_pressed() -> void:
-	$LineEditAcceptDialog.popup_centered()
+	var dialog: NewLayerDialog = dialog_scene.instantiate()
+	add_child(dialog)
+	dialog.accepted.connect(_on_new_layer_dialog_accepted)
+	dialog.popup_centered()
 
 
-func _on_line_edit_accept_dialog_text_confirmed(_text: String) -> void:
-	Layers.add_layer(Vector2i.ONE, _text)
+func _on_new_layer_dialog_accepted(name: String, fill_color: Color) -> void:
+	Layers.add_layer(Vector2i.ONE * 32, name, fill_color)
