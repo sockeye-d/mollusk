@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="Tool" load_steps=7 format=3 uid="uid://cyb3g0fgdq34c"]
+[gd_resource type="Resource" script_class="Tool" load_steps=8 format=3 uid="uid://cyb3g0fgdq34c"]
 
 [ext_resource type="Script" path="res://tools/tool.gd" id="1_5eqee"]
 [ext_resource type="Texture2D" uid="uid://cpkv08k70f1ht" path="res://icons/tool_fill.png" id="1_ivlfh"]
+[ext_resource type="Script" path="res://tools/tool_draw_scripts/bucket_fill_draw_script.gd" id="1_m4nmc"]
 [ext_resource type="Script" path="res://tools/tool_settings/slider_tool_setting.gd" id="2_s7v4v"]
 [ext_resource type="Script" path="res://tools/tool_settings/checkbox_tool_setting.gd" id="3_pi6jx"]
 
@@ -23,3 +24,4 @@ script = ExtResource("1_5eqee")
 icon = ExtResource("1_ivlfh")
 name = "Bucket fill"
 tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([SubResource("Resource_7o6tf"), SubResource("Resource_2pdpe")])
+draw_script = ExtResource("1_m4nmc")

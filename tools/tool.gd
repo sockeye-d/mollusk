@@ -1,5 +1,15 @@
 class_name Tool
 extends Resource
+## A tool for drawing.
+## Tool settings are determined by the ToolSetting resources in `tool_settings`
+## Tool functionality is determined by the script attached to `draw_script`
+## To make such a script, create a new class inheriting from the type `DrawScript`
+## then override the `draw` method to do whatever
+
+enum ActivationModes {
+	ON_MOVEMENT,
+	ON_CLICK,
+}
 
 
 @export var icon: Texture2D
@@ -34,6 +44,6 @@ func draw(
 	
 	if _script_obj.get_script() == null:
 		_script_obj.set_script(draw_script)
-		draw_script.reload()
+		draw_script.reload(true)
 	
 	_script_obj.draw(canvas, settings, mouse_pos, mouse_pos_last, mouse_pos_from_hold, fg_color, bg_color)

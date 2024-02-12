@@ -1,6 +1,27 @@
 class_name ImageExt
 
 
+const OFFSETS: Dictionary = {
+	false: [
+		Vector2i(1, 0),
+		Vector2i(0, 1),
+		Vector2i(-1, 0),
+		Vector2i(0, -1),
+	],
+	
+	true: [
+		Vector2i(1, 0),
+		Vector2i(1, 1),
+		Vector2i(0, 1),
+		Vector2i(-1, 1),
+		Vector2i(-1, 0),
+		Vector2i(-1, -1),
+		Vector2i(0, -1),
+		Vector2i(1, -1),
+	]
+}
+
+
 @export var image: Image
 
 var size: Vector2:
@@ -33,6 +54,17 @@ func draw_pixels(ps: Array[Vector2i], color: Color, blend: bool = false) -> void
 		draw_pixel(p, color, blend)
 
 
+func erase_pixel(p: Vector2i, str: float) -> void:
+	var color = image.get_pixelv(p)
+	color.a = clamp(color.a - str, 0.0, 1.0)
+	image.set_pixelv(p, color)
+
+
+func erase_pixels(ps: Array[Vector2i], str: float) -> void:
+	for p in ps:
+		erase_pixel(p, str)
+
+
 func draw_line(p0: Vector2i, p1: Vector2i, color: Color, blend: bool = false) -> void:
 	draw_pixels(_get_line_points(p0, p1), color, blend)
 
@@ -55,6 +87,25 @@ func draw_circle(c: Vector2i, r: int, color: Color, blend: bool = false) -> void
 					draw_pixel(c + p, color)
 				else:
 					image.set_pixelv(c + p, color)
+
+
+func get_fill_points(p: Vector2i, tolerance: float, do_corners: bool = false) -> Array[Vector2i]:
+	var this_pixel_color: Color = image.get_pixelv(p)
+	var arr: Array[Vector2i] = []
+	var queue: Array = [p]
+	
+	while queue.size() > 0:
+		var n: Vector2i = queue.pop_front()
+		if _in_box(n, Vector2i.ZERO, size):
+			var color_diff = _color_difference(image.get_pixelv(n), this_pixel_color)
+			if color_diff < tolerance and not arr.has(n):
+				arr.append(n)
+				
+				for i in OFFSETS[do_corners].size():
+					queue.push_front(n + OFFSETS[do_corners][i])
+	
+	return arr
+
 #endregion
 
 #region Util code
@@ -87,4 +138,9 @@ func _get_line_points(p0: Vector2i, p1: Vector2i, double_pixels: bool = false) -
 	var arr_typed: Array[Vector2i] = []
 	arr_typed.assign(arr.keys())
 	return arr_typed
+
+
+func _color_difference(a: Color, b: Color) -> float:
+	var d = a * a.a - b * b.a
+	return sqrt(d.r * d.r + d.g * d.g * d.b * d.b + d.a * d.a) / 2.0
 #endregion
