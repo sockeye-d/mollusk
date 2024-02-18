@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c0j42cgttk8kf"]
+[gd_scene load_steps=19 format=3 uid="uid://c0j42cgttk8kf"]
 
 [ext_resource type="Theme" uid="uid://5210gar13ap3" path="res://main.theme" id="1_ckeee"]
 [ext_resource type="Script" path="res://gui/triple_split_container.gd" id="1_ojnui"]
@@ -15,12 +15,19 @@
 [ext_resource type="Resource" uid="uid://50wlh3p5tpxk" path="res://tools/tool_resources/eraser.tres" id="7_iw2dd"]
 [ext_resource type="Script" path="res://add_layer_button.gd" id="7_uawcc"]
 [ext_resource type="Resource" uid="uid://cyb3g0fgdq34c" path="res://tools/tool_resources/bucket_fill.tres" id="10_h563c"]
+[ext_resource type="Shader" path="res://gui/grid.gdshader" id="13_jbabm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ght6q"]
 shader = ExtResource("4_tjg52")
 shader_parameter/size = 0.02
 shader_parameter/color_0 = Color(0.172549, 0.172549, 0.172549, 1)
 shader_parameter/color_1 = Color(0.121569, 0.121569, 0.121569, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sjxk7"]
+shader = ExtResource("13_jbabm")
+shader_parameter/resolution = Vector2(64, 64)
+shader_parameter/back_color = Color(0, 0, 0, 0)
+shader_parameter/grid_color = Color(1, 1, 1, 0.0862745)
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -142,7 +149,18 @@ size_flags_horizontal = 3
 layout_mode = 2
 split_offset = 685
 
-[node name="ZoomScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" node_paths=PackedStringArray("node") instance=ExtResource("3_ijncf")]
+[node name="Control" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ZoomScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer" node_paths=PackedStringArray("node") instance=ExtResource("3_ijncf")]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 3
@@ -150,16 +168,16 @@ vertical_scroll_mode = 3
 default_zoom = 0.5
 node = NodePath("LayerCenterContainer/LayerContainer")
 
-[node name="LayerCenterContainer" type="CenterContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer"]
+[node name="LayerCenterContainer" type="CenterContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LayerContainer" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer/LayerCenterContainer"]
+[node name="LayerContainer" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
+[node name="Background" type="ColorRect" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
 material = SubResource("ShaderMaterial_ght6q")
 layout_mode = 1
 anchors_preset = 15
@@ -168,7 +186,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LayerContainer" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
+[node name="LayerContainer" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -176,6 +194,46 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Grid" type="ColorRect" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
+material = SubResource("ShaderMaterial_sjxk7")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InfoBar" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22.25)
+layout_mode = 2
+
+[node name="LeftBar" type="HBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/InfoBar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MousePosition" type="Label" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/InfoBar/LeftBar"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "myThingy"
+
+[node name="RightBar" type="HBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/InfoBar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="TripleSplitContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" node_paths=PackedStringArray("secondary_split_container") instance=ExtResource("6_l2h7q")]
 layout_mode = 2

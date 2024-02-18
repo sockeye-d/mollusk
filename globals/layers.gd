@@ -13,6 +13,8 @@ var layer_item_scene: PackedScene = preload("res://gui/layer_item.tscn")
 
 var layer_container: Node
 var layer_item_container: Node
+var info_bar_left: Dictionary = {}
+var info_bar_right: Dictionary = {}
 
 
 var selected_layer_item: LayerItem
@@ -24,6 +26,19 @@ func _ready() -> void:
 	if get_tree().root.has_node("Main"):
 		layer_container = Nodes.get_unique_node("LayerContainer")
 		layer_item_container = Nodes.get_unique_node("LayerList")
+		
+		for child in Nodes.get_unique_node("InfoBar").get_node("LeftBar").get_children():
+			info_bar_left.merge({ child.name.to_snake_case(): child })
+		
+		for child in Nodes.get_unique_node("InfoBar").get_node("RightBar").get_children():
+			info_bar_right.merge({ child.name: child })
+
+
+func _process(delta: float) -> void:
+	if selected_layer == null:
+		info_bar_left.mouse_position.text = ""
+	else:
+		info_bar_left.mouse_position.text = str(PaintManager.mouse_pos) + ", " + str(PaintManager.mouse_pos_last)
 
 
 func add_layer(size: Vector2i, layer_name: String, fill_color: Color) -> void:

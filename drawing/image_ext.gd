@@ -55,9 +55,10 @@ func draw_pixels(ps: Array[Vector2i], color: Color, blend: bool = false) -> void
 
 
 func erase_pixel(p: Vector2i, str: float) -> void:
-	var color = image.get_pixelv(p)
-	color.a = clamp(color.a - str, 0.0, 1.0)
-	image.set_pixelv(p, color)
+	if _in_box(p, Vector2i.ZERO, size):
+		var color = image.get_pixelv(p)
+		color.a = clamp(color.a - str, 0.0, 1.0)
+		image.set_pixelv(p, color)
 
 
 func erase_pixels(ps: Array[Vector2i], str: float) -> void:
@@ -90,6 +91,9 @@ func draw_circle(c: Vector2i, r: int, color: Color, blend: bool = false) -> void
 
 
 func get_fill_points(p: Vector2i, tolerance: float, do_corners: bool = false) -> Array[Vector2i]:
+	if not _in_box(p, Vector2i.ZERO, size):
+		return []
+	
 	var this_pixel_color: Color = image.get_pixelv(p)
 	var arr: Array[Vector2i] = []
 	var queue: Array = [p]
@@ -105,7 +109,6 @@ func get_fill_points(p: Vector2i, tolerance: float, do_corners: bool = false) ->
 					queue.push_front(n + OFFSETS[do_corners][i])
 	
 	return arr
-
 #endregion
 
 #region Util code

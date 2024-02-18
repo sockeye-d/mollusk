@@ -7,14 +7,16 @@ extends Resource
 ## then override the `draw` method to do whatever
 
 enum ActivationModes {
-	ON_MOVEMENT,
-	ON_CLICK,
+	MOUSE_DRAG,
+	MOUSE_CLICK,
+	MOUSE_CLICK_HOLD,
 }
 
 
 @export var icon: Texture2D
 @export var name: String
 @export var tool_settings: Array[ToolSetting]
+@export var activation_mode: ActivationModes
 @export var draw_script: Script:
 	set(value):
 		draw_script = value

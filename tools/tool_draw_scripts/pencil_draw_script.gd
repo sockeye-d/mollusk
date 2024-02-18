@@ -11,5 +11,6 @@ func draw(
 		) -> void:
 	
 	var points = canvas._get_line_points(mouse_pos, mouse_pos_last)
-	points.remove_at(0)
+	if points.size() > 1:
+		points.remove_at(0)
 	canvas.draw_pixels(points, fg_color, settings.blend)

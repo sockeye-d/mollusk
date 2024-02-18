@@ -15,4 +15,5 @@ script = ExtResource("1_iaxyb")
 icon = ExtResource("1_fcfwg")
 name = "Pencil"
 tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([SubResource("Resource_t6ljw")])
+activation_mode = 0
 draw_script = ExtResource("1_dh0uc")

@@ -10,4 +10,4 @@ func draw(
 		bg_color: Color,
 		) -> void:
 	
-	canvas.draw_pixels(canvas.get_fill_points(mouse_pos, settings.tolerance / 100.0), fg_color, true)
+	canvas.draw_pixels(canvas.get_fill_points(mouse_pos, settings.tolerance / 100.0, settings.cross_corners), fg_color, settings.blend)

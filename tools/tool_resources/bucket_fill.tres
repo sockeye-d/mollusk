@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Tool" load_steps=8 format=3 uid="uid://cyb3g0fgdq34c"]
+[gd_resource type="Resource" script_class="Tool" load_steps=9 format=3 uid="uid://cyb3g0fgdq34c"]
 
 [ext_resource type="Script" path="res://tools/tool.gd" id="1_5eqee"]
 [ext_resource type="Texture2D" uid="uid://cpkv08k70f1ht" path="res://icons/tool_fill.png" id="1_ivlfh"]
@@ -16,12 +16,18 @@ label = "tolerance"
 
 [sub_resource type="Resource" id="Resource_2pdpe"]
 script = ExtResource("3_pi6jx")
-default_value = null
-label = "cross corners"
+default_value = false
+label = "cross_corners"
+
+[sub_resource type="Resource" id="Resource_n1pdm"]
+script = ExtResource("3_pi6jx")
+default_value = false
+label = "blend"
 
 [resource]
 script = ExtResource("1_5eqee")
 icon = ExtResource("1_ivlfh")
 name = "Bucket fill"
-tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([SubResource("Resource_7o6tf"), SubResource("Resource_2pdpe")])
+tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([SubResource("Resource_7o6tf"), SubResource("Resource_2pdpe"), SubResource("Resource_n1pdm")])
+activation_mode = 1
 draw_script = ExtResource("1_m4nmc")

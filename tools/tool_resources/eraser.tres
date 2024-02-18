@@ -18,4 +18,5 @@ script = ExtResource("1_5t81d")
 icon = ExtResource("1_6kt3i")
 name = "Eraser"
 tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([SubResource("Resource_subq2")])
+activation_mode = 0
 draw_script = ExtResource("1_4sucr")

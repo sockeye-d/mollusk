@@ -3,6 +3,8 @@ extends Node
 var color_picker: DualColorPicker
 var tool_label_container: Control
 var tool_value_container: Control
+var info_bar_left: Dictionary = {}
+var info_bar_right: Dictionary = {}
 
 func _ready() -> void:
 	if get_tree().root.has_node("Main"):
@@ -14,6 +16,7 @@ func _ready() -> void:
 var mouse_pos: Vector2i
 var mouse_pos_last: Vector2i
 var mouse_pos_from_hold: Vector2i
+var should_draw: bool
 
 var tool: Tool:
 	set(value):
@@ -29,18 +32,39 @@ func _process(delta: float) -> void:
 		
 		if Input.is_action_just_pressed("click"):
 			mouse_pos_from_hold = Layers.selected_layer.local_mouse
+		if not mouse_pos == mouse_pos_last:
+			should_draw = true
 		
-		if Input.is_action_pressed("click") and not mouse_pos_last == mouse_pos:
-			tool.draw(
-					Layers.selected_layer.canvas,
-					mouse_pos,
-					mouse_pos_last,
-					mouse_pos_from_hold,
-					color_picker.fg,
-					color_picker.bg
-					)
-			Layers.selected_layer.update()
+		match tool.activation_mode:
+			Tool.ActivationModes.MOUSE_DRAG:
+				if (
+						Input.is_action_just_pressed("click")
+						or (Input.is_action_pressed("click")
+						and should_draw)
+				):
+					draw()
+					print("drew!")
+					should_draw = false
+			
+			Tool.ActivationModes.MOUSE_CLICK:
+				if Input.is_action_just_pressed("click"):
+					draw()
+			
+		if not mouse_pos == mouse_pos_last:
+			should_draw = true
 		mouse_pos_last = Layers.selected_layer.local_mouse
+
+
+func draw() -> void:
+	tool.draw(
+			Layers.selected_layer.canvas,
+			mouse_pos,
+			mouse_pos_last,
+			mouse_pos_from_hold,
+			color_picker.fg,
+			color_picker.bg
+			)
+	Layers.selected_layer.update()
 
 
 func _add_tool_settings(tool: Tool) -> void:
