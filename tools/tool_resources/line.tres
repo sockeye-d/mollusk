@@ -1,8 +1,19 @@
-[gd_resource type="Resource" script_class="Tool" load_steps=2 format=3 uid="uid://bno11fcjlg8ly"]
+[gd_resource type="Resource" script_class="Tool" load_steps=6 format=3 uid="uid://bno11fcjlg8ly"]
 
+[ext_resource type="Script" path="res://tools/tool_draw_scripts/line_draw_script.gd" id="1_84oeq"]
 [ext_resource type="Script" path="res://tools/tool.gd" id="1_xk77f"]
+[ext_resource type="Texture2D" uid="uid://c1hbtn863wcje" path="res://icons/tool_line.png" id="2_iwg6p"]
+[ext_resource type="Script" path="res://tools/tool_settings/checkbox_tool_setting.gd" id="4_vwddk"]
+
+[sub_resource type="Resource" id="Resource_ts7s8"]
+script = ExtResource("4_vwddk")
+default_value = true
+label = "blend"
 
 [resource]
 script = ExtResource("1_xk77f")
+icon = ExtResource("2_iwg6p")
 name = "Line"
-tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([])
+tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([SubResource("Resource_ts7s8")])
+activation_mode = 2
+draw_script = ExtResource("1_84oeq")

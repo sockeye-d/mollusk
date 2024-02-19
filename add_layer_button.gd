@@ -11,5 +11,5 @@ func _on_pressed() -> void:
 	dialog.popup_centered()
 
 
-func _on_new_layer_dialog_accepted(name: String, fill_color: Color) -> void:
-	Layers.add_layer(Vector2i.ONE * 32, name, fill_color)
+func _on_new_layer_dialog_accepted(layer_name: String, fill_color: Color) -> void:
+	Layers.add_layer(Vector2i.ONE * 32, layer_name, fill_color)

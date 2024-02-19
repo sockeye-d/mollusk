@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c0j42cgttk8kf"]
+[gd_scene load_steps=21 format=3 uid="uid://c0j42cgttk8kf"]
 
 [ext_resource type="Theme" uid="uid://5210gar13ap3" path="res://main.theme" id="1_ckeee"]
 [ext_resource type="Script" path="res://gui/triple_split_container.gd" id="1_ojnui"]
@@ -14,8 +14,11 @@
 [ext_resource type="Texture2D" uid="uid://cpkv08k70f1ht" path="res://icons/tool_fill.png" id="6_tk6px"]
 [ext_resource type="Resource" uid="uid://50wlh3p5tpxk" path="res://tools/tool_resources/eraser.tres" id="7_iw2dd"]
 [ext_resource type="Script" path="res://add_layer_button.gd" id="7_uawcc"]
+[ext_resource type="Resource" uid="uid://bno11fcjlg8ly" path="res://tools/tool_resources/line.tres" id="8_8j58j"]
 [ext_resource type="Resource" uid="uid://cyb3g0fgdq34c" path="res://tools/tool_resources/bucket_fill.tres" id="10_h563c"]
 [ext_resource type="Shader" path="res://gui/grid.gdshader" id="13_jbabm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w3bdt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ght6q"]
 shader = ExtResource("4_tjg52")
@@ -113,6 +116,7 @@ icon = ExtResource("5_ilw3x")
 flat = true
 expand_icon = true
 script = ExtResource("4_s7tdj")
+tool = ExtResource("8_8j58j")
 
 [node name="BucketFill" type="Button" parent="VBoxContainer/TripleSplitContainer/SplitContainer/PanelContainer/ToolTray"]
 texture_filter = 4
@@ -139,6 +143,10 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_w3bdt")
 
 [node name="ToolValueContainer" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/HBoxContainer"]
 unique_name_in_owner = true

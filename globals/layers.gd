@@ -31,14 +31,15 @@ func _ready() -> void:
 			info_bar_left.merge({ child.name.to_snake_case(): child })
 		
 		for child in Nodes.get_unique_node("InfoBar").get_node("RightBar").get_children():
-			info_bar_right.merge({ child.name: child })
+			info_bar_right.merge({ child.name.to_snake_case(): child })
 
 
 func _process(delta: float) -> void:
-	if selected_layer == null:
-		info_bar_left.mouse_position.text = ""
-	else:
-		info_bar_left.mouse_position.text = str(PaintManager.mouse_pos) + ", " + str(PaintManager.mouse_pos_last)
+	if info_bar_left.has("mouse_position"):
+		if selected_layer == null:
+			info_bar_left.mouse_position.text = ""
+		else:
+			info_bar_left.mouse_position.text = str(PaintManager.mouse_pos) + ", " + str(PaintManager.mouse_pos_last)
 
 
 func add_layer(size: Vector2i, layer_name: String, fill_color: Color) -> void:

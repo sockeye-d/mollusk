@@ -41,11 +41,12 @@ func draw(
 		mouse_pos_last: Vector2i,
 		mouse_pos_from_hold: Vector2i,
 		fg_color: Color,
-		bg_color: Color
+		bg_color: Color,
+		modifiers: int,
 		) -> void:
 	
 	if _script_obj.get_script() == null:
 		_script_obj.set_script(draw_script)
 		draw_script.reload(true)
 	
-	_script_obj.draw(canvas, settings, mouse_pos, mouse_pos_last, mouse_pos_from_hold, fg_color, bg_color)
+	_script_obj.draw(canvas, settings, mouse_pos, mouse_pos_last, mouse_pos_from_hold, fg_color, bg_color, modifiers)

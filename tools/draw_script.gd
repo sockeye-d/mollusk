@@ -1,7 +1,7 @@
 class_name DrawScript
 extends Object
 
-func _draw(
+func draw(
 		canvas: ImageExt,
 		settings: Dictionary,
 		mouse_pos: Vector2i,
@@ -9,5 +9,6 @@ func _draw(
 		mouse_pos_from_hold: Vector2i,
 		fg_color: Color,
 		bg_color: Color,
+		modifiers: int,
 		) -> void:
 	pass

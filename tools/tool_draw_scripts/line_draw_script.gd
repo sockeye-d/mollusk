@@ -11,4 +11,4 @@ func draw(
 		modifiers: int,
 		) -> void:
 	
-	canvas.draw_pixels(canvas.get_fill_points(mouse_pos, settings.tolerance / 100.0, settings.cross_corners), fg_color, settings.blend)
+	canvas.draw_pixels(canvas._get_line_points(mouse_pos_from_hold, mouse_pos), fg_color, settings.blend)

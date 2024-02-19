@@ -1,4 +1,5 @@
 class_name ImageExt
+extends RefCounted
 
 
 const OFFSETS: Dictionary = {
@@ -23,7 +24,11 @@ const OFFSETS: Dictionary = {
 
 
 @export var image: Image
-
+var data: PackedByteArray:
+	set(value):
+		image.set_data(image.get_width(), image.get_height(), image.has_mipmaps(), image.get_format(), value)
+	get:
+		return image.get_data()
 var size: Vector2:
 	get:
 		return Vector2(image.get_size())
@@ -54,16 +59,16 @@ func draw_pixels(ps: Array[Vector2i], color: Color, blend: bool = false) -> void
 		draw_pixel(p, color, blend)
 
 
-func erase_pixel(p: Vector2i, str: float) -> void:
+func erase_pixel(p: Vector2i, strength: float) -> void:
 	if _in_box(p, Vector2i.ZERO, size):
 		var color = image.get_pixelv(p)
-		color.a = clamp(color.a - str, 0.0, 1.0)
+		color.a = clamp(color.a - strength, 0.0, 1.0)
 		image.set_pixelv(p, color)
 
 
-func erase_pixels(ps: Array[Vector2i], str: float) -> void:
+func erase_pixels(ps: Array[Vector2i], strength: float) -> void:
 	for p in ps:
-		erase_pixel(p, str)
+		erase_pixel(p, strength)
 
 
 func draw_line(p0: Vector2i, p1: Vector2i, color: Color, blend: bool = false) -> void:
