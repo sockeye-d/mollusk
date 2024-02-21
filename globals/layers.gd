@@ -42,7 +42,7 @@ func _process(delta: float) -> void:
 			info_bar_left.mouse_position.text = str(PaintManager.mouse_pos) + ", " + str(PaintManager.mouse_pos_last)
 
 
-func add_layer(size: Vector2i, layer_name: String, fill_color: Color) -> void:
+func add_layer(size: Vector2i, layer_name: String, fill_color: Color) -> Layer:
 	size = Vector2i(64, 64)
 	var layer: Layer = layer_scene.instantiate() as Layer
 	layer.create(size, layer_name, fill_color)
@@ -53,6 +53,8 @@ func add_layer(size: Vector2i, layer_name: String, fill_color: Color) -> void:
 	layer_item_container.move_child(layer_item, 0)
 	_layers.push_front(layer_item)
 	_update_layer_selected()
+	
+	return layer
 
 
 func move_layer(index: int, dir: int) -> void:
@@ -85,6 +87,10 @@ func select_layer(index: int) -> void:
 	_layers[index].selected = true
 	selected_layer_item = _layers[index]
 	_update_layer_selected()
+
+
+func select_layer_ref(layer: Layer) -> void:
+	select_layer(_layers.find(layer))
 
 
 func deselect_layers() -> void:

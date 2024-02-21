@@ -1,5 +1,5 @@
-class_name SliderCombo
-extends Range
+@tool
+class_name SliderCombo extends Range
 
 
 enum DraggingStates {
