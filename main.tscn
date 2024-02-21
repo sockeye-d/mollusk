@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c0j42cgttk8kf"]
+[gd_scene load_steps=23 format=3 uid="uid://c0j42cgttk8kf"]
 
 [ext_resource type="Theme" uid="uid://5210gar13ap3" path="res://main.theme" id="1_ckeee"]
 [ext_resource type="Script" path="res://gui/triple_split_container.gd" id="1_ojnui"]
@@ -17,7 +17,8 @@
 [ext_resource type="Resource" uid="uid://bno11fcjlg8ly" path="res://tools/tool_resources/line.tres" id="8_8j58j"]
 [ext_resource type="Resource" uid="uid://cyb3g0fgdq34c" path="res://tools/tool_resources/bucket_fill.tres" id="10_h563c"]
 [ext_resource type="Shader" path="res://gui/grid.gdshader" id="13_jbabm"]
-[ext_resource type="Script" path="res://gui/slider_combo.gd" id="18_rb6ej"]
+[ext_resource type="Script" path="res://gui/canvas_focus.gd" id="15_byrsa"]
+[ext_resource type="Script" path="res://gui/opacity_slider.gd" id="18_ixdwu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w3bdt"]
 
@@ -213,6 +214,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="CanvasFocus" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 1
+script = ExtResource("15_byrsa")
+
 [node name="InfoBar" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 22.25)
@@ -295,7 +307,7 @@ layout_mode = 2
 text = "new layer"
 script = ExtResource("7_uawcc")
 
-[node name="SliderCombo" type="Range" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools"]
+[node name="OpacitySlider" type="Range" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools"]
 _import_path = NodePath("")
 unique_name_in_owner = false
 process_mode = 0
@@ -349,7 +361,7 @@ exp_edit = false
 rounded = false
 allow_greater = false
 allow_lesser = false
-script = ExtResource("18_rb6ej")
+script = ExtResource("18_ixdwu")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox"]
 custom_minimum_size = Vector2(0, 100)
@@ -360,5 +372,9 @@ horizontal_scroll_mode = 0
 [node name="LayerList" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
+[connection signal="focus_entered" from="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer/CanvasFocus" to="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer/CanvasFocus" method="_on_focus_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer/CanvasFocus" to="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer/CanvasFocus" method="_on_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton" to="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton" method="_on_pressed"]

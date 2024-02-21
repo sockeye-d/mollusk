@@ -4,7 +4,11 @@ class_name Layer
 
 @export var drawable: bool = false
 @export var layer_name: String
-var opacity: float
+var opacity: float = 1.0:
+	set(v):
+		modulate.a = v
+	get:
+		return modulate.a
 
 
 var canvas: ImageExt

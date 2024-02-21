@@ -12,6 +12,12 @@ enum DraggingStates {
 @export var mouse_draggable: bool = true
 @export var mouse_threshold: float = 3
 @export var mouse_drag_scale: float = 0.001
+@export var editable: bool = true:
+	set(v):
+		line_edit.editable = v
+		slider.editable = v
+	get:
+		return line_edit.editable or slider.editable
 
 
 var slider_value:

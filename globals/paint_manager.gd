@@ -4,6 +4,7 @@ extends Node
 var color_picker: DualColorPicker
 var tool_label_container: Control
 var tool_value_container: Control
+var canvas_focus: Control
 var info_bar_left: Dictionary = {}
 var info_bar_right: Dictionary = {}
 
@@ -13,10 +14,12 @@ func _ready() -> void:
 		color_picker = Nodes.get_unique_node("ColorPicker")
 		tool_label_container = Nodes.get_unique_node("ToolLabelContainer")
 		tool_value_container = Nodes.get_unique_node("ToolValueContainer")
+		canvas_focus = Nodes.get_unique_node("CanvasFocus")
 
 
+const NONE = Vector2i(-1, -1)
 var mouse_pos: Vector2i
-var mouse_pos_last: Vector2i
+var mouse_pos_last: Vector2i = Vector2i(-1, -1)
 var mouse_pos_from_hold: Vector2i
 var should_draw: bool
 var pre_draw_image_data: PackedByteArray
@@ -34,8 +37,10 @@ var tool: Tool:
 
 
 func _process(delta: float) -> void:
-	if not Layers.selected_layer_item == null and not tool == null:
+	if not Layers.selected_layer_item == null and not tool == null and canvas_focus.focused:
 		mouse_pos = Layers.selected_layer.local_mouse
+		if mouse_pos_last == NONE:
+			mouse_pos_last = mouse_pos
 		
 		if Input.is_action_just_pressed("click"):
 			mouse_pos_from_hold = Layers.selected_layer.local_mouse

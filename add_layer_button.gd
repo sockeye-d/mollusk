@@ -13,4 +13,5 @@ func _on_pressed() -> void:
 
 func _on_new_layer_dialog_accepted(layer_name: String, fill_color: Color) -> void:
 	var layer = Layers.add_layer(Vector2i.ONE * 32, layer_name, fill_color)
-	Layers.select_layer_ref(layer)
+	print(layer.get_index())
+	Layers.select_layer(layer.get_index())
