@@ -2,6 +2,9 @@
 class_name SliderCombo extends Range
 
 
+signal slider_value_changed(v: float)
+
+
 enum DraggingStates {
 	NONE,
 	CLICKED,
@@ -24,7 +27,8 @@ var slider_value:
 	set(v):
 		v = _constrain(v)
 		slider.value = v
-		line_edit.text = str(v)
+		line_edit.text = str(snapped(v, step))
+		slider_value_changed.emit(v)
 	get:
 		return line_edit.text.to_float()
 
@@ -109,7 +113,7 @@ func _resize() -> void:
 
 func _constrain(v: float) -> float:
 	if not allow_lesser:
-		v = max(v, min_value)
+		v = maxf(v, min_value)
 	if not allow_greater:
-		v = min(v, max_value)
-	return v
+		v = minf(v, max_value)
+	return snappedf(v, step)

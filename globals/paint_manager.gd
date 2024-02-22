@@ -37,6 +37,8 @@ var tool: Tool:
 
 
 func _process(delta: float) -> void:
+	if not canvas_focus.focused:
+		mouse_pos_last = NONE
 	if not Layers.selected_layer_item == null and not tool == null and canvas_focus.focused:
 		mouse_pos = Layers.selected_layer.local_mouse
 		if mouse_pos_last == NONE:
