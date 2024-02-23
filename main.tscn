@@ -258,16 +258,25 @@ grow_vertical = 0
 
 [node name="TripleSplitContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer" node_paths=PackedStringArray("secondary_split_container") instance=ExtResource("6_l2h7q")]
 layout_mode = 2
-split_offset = 205
+split_offset = 30
 vertical = true
 secondary_split_container = NodePath("SplitContainer")
 
 [node name="ColorPickerContainer" type="PanelContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer"]
 layout_mode = 2
 
-[node name="ColorPicker" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/ColorPickerContainer" instance=ExtResource("5_r05td")]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/ColorPickerContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorPicker" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/ColorPickerContainer/MarginContainer" instance=ExtResource("5_r05td")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 1
 
 [node name="SplitContainer" type="SplitContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer"]
 layout_mode = 2

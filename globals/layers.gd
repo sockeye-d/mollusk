@@ -49,7 +49,8 @@ func add_layer(size: Vector2i, layer_name: String, fill_color: Color) -> LayerIt
 	size = Vector2i(64, 64)
 	var layer: Layer = layer_scene.instantiate() as Layer
 	layer.create(size, layer_name, fill_color)
-	layer_container.add_child(layer)
+	layer.name = layer.layer_name
+	layer_container.add_child(layer, true)
 	var layer_item: LayerItem = layer_item_scene.instantiate() as LayerItem
 	layer_item.create(layer_name)
 	layer_item.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -99,8 +100,14 @@ func deselect_layers() -> void:
 	for layer in _layers:
 		layer.selected = false
 	selected_layer_item = null
+	_update_layer_selected()
 
 
 func _update_layer_selected() -> void:
-	selected_layer = layer_container.get_child(layer_container.get_child_count() - get_layer_index(selected_layer_item) - 1) as Layer
+	layer_container.print_tree_pretty()
+	print(layer_container.get_child_count())
+	if layer_container.get_child_count() == 0:
+		return
+	
+	selected_layer = layer_container.get_child(-1 - get_layer_index(selected_layer_item)) as Layer
 	layer_selection_changed.emit()
