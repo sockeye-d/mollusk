@@ -77,6 +77,9 @@ func _process(delta: float) -> void:
 			should_draw = true
 		
 		mouse_pos_last = Layers.selected_layer.local_mouse
+		
+	if not Layers.selected_layer == null and Input.is_action_just_pressed("export"):
+		print(Layers.as_image().save_png("user://image.png"))
 
 
 func draw() -> void:
