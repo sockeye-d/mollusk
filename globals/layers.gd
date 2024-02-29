@@ -14,7 +14,7 @@ var layer_scene: PackedScene = preload("res://drawing/layer.tscn")
 var layer_item_scene: PackedScene = preload("res://gui/layer_item.tscn")
 
 
-var layer_container: Node
+var layer_container: SubViewport
 var layer_item_container: Node
 var info_bar_left: Dictionary = {}
 var info_bar_right: Dictionary = {}
@@ -101,6 +101,17 @@ func deselect_layers() -> void:
 		layer.selected = false
 	selected_layer_item = null
 	_update_layer_selected()
+
+
+func get_layers() -> Array[Layer]:
+	var arr: Array[Layer] = []
+	for child in layer_container.get_children():
+		arr.append(child)
+	return arr
+
+
+func as_image() -> Image:
+	return layer_container.get_texture().get_image()
 
 
 func _update_layer_selected() -> void:

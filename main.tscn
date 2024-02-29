@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c0j42cgttk8kf"]
+[gd_scene load_steps=24 format=3 uid="uid://c0j42cgttk8kf"]
 
 [ext_resource type="Theme" uid="uid://5210gar13ap3" path="res://main.theme" id="1_ckeee"]
 [ext_resource type="Script" path="res://gui/triple_split_container.gd" id="1_ojnui"]
@@ -27,6 +27,9 @@ shader = ExtResource("4_tjg52")
 shader_parameter/size = 0.02
 shader_parameter/color_0 = Color(0.172549, 0.172549, 0.172549, 1)
 shader_parameter/color_1 = Color(0.121569, 0.121569, 0.121569, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ega3t"]
+viewport_path = NodePath("VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer/CanvasCenterContainer/CanvasContainer/LayerContainer")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sjxk7"]
 shader = ExtResource("13_jbabm")
@@ -170,33 +173,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ZoomScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer" node_paths=PackedStringArray("node") instance=ExtResource("3_ijncf")]
+[node name="CanvasZoomScrollContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer" node_paths=PackedStringArray("node") instance=ExtResource("3_ijncf")]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 default_zoom = 0.5
-node = NodePath("LayerCenterContainer/LayerContainer")
+node = NodePath("CanvasCenterContainer/CanvasContainer")
 
-[node name="LayerCenterContainer" type="CenterContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer"]
+[node name="CanvasCenterContainer" type="CenterContainer" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LayerContainer" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer"]
+[node name="CanvasContainer" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer/CanvasCenterContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 
-[node name="Background" type="ColorRect" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
-material = SubResource("ShaderMaterial_ght6q")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LayerContainer" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
+[node name="MousePositionNode" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer/CanvasCenterContainer/CanvasContainer"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -205,7 +199,33 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Grid" type="ColorRect" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
+[node name="Background" type="ColorRect" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer/CanvasCenterContainer/CanvasContainer"]
+material = SubResource("ShaderMaterial_ght6q")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LayerContainer" type="SubViewport" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer/CanvasCenterContainer/CanvasContainer"]
+unique_name_in_owner = true
+transparent_bg = true
+size = Vector2i(64, 64)
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer/CanvasCenterContainer/CanvasContainer"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_ega3t")
+expand_mode = 1
+
+[node name="Grid" type="ColorRect" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer/CanvasCenterContainer/CanvasContainer"]
 material = SubResource("ShaderMaterial_sjxk7")
 layout_mode = 1
 anchors_preset = 15
@@ -214,7 +234,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CanvasFocus" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer"]
+[node name="CanvasFocus" type="Control" parent="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer/CanvasCenterContainer/CanvasContainer"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -384,6 +404,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[connection signal="focus_entered" from="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer/CanvasFocus" to="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer/CanvasFocus" method="_on_focus_entered"]
-[connection signal="mouse_exited" from="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer/CanvasFocus" to="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/ZoomScrollContainer/LayerCenterContainer/LayerContainer/CanvasFocus" method="_on_mouse_exited"]
+[connection signal="focus_entered" from="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer/CanvasCenterContainer/CanvasContainer/CanvasFocus" to="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer/CanvasCenterContainer/CanvasContainer/CanvasFocus" method="_on_focus_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer/CanvasCenterContainer/CanvasContainer/CanvasFocus" to="VBoxContainer/TripleSplitContainer/HSplitContainer/Control/VBoxContainer/CanvasZoomScrollContainer/CanvasCenterContainer/CanvasContainer/CanvasFocus" method="_on_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton" to="VBoxContainer/TripleSplitContainer/HSplitContainer/TripleSplitContainer/SplitContainer/PanelContainer/LayersBox/LayerTools/AddLayerButton" method="_on_pressed"]

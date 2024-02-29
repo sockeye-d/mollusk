@@ -10,11 +10,11 @@ var opacity: float = 1.0:
 	get:
 		return modulate.a
 
-
+@onready var mouse_pos_node = Nodes.get_unique_node("MousePositionNode")
 var canvas: ImageExt
 var local_mouse_norm: Vector2:
 	get:
-		return get_global_transform().affine_inverse() * get_global_mouse_position() / size[size.max_axis_index()]
+		return mouse_pos_node.get_global_transform().affine_inverse() * mouse_pos_node.get_global_mouse_position() / mouse_pos_node.size[size.max_axis_index()]
 var local_mouse: Vector2i:
 	get:
 		return Vector2i(local_mouse_norm * canvas.size)
