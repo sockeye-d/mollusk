@@ -192,6 +192,14 @@ func get_ellipse_edge_points(center: Vector2i, r: Vector2i) -> Array[Vector2i]:
 		arr.append(center + Vector2i(p) * Vector2i(0,  1))
 		arr.append(center + Vector2i(p) * Vector2i(0, -1))
 	return arr
+
+
+func get_rectangle_edge_points(center: Vector2i, size: Vector2i) -> Array[Vector2i]:
+	var arr: Array[Vector2i] = []
+	
+	
+	
+	return arr
 #endregion
 
 #region Util code
