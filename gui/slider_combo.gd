@@ -63,7 +63,13 @@ func _init() -> void:
 	add_child(container)
 	container.add_child(line_edit)
 	container.add_child(slider)
-	
+
+
+func _process(delta: float) -> void:
+	slider.min_value = min_value
+	slider.max_value = max_value
+	slider.step = step
+
 
 func _on_text_submitted(new_text: String) -> void:
 	var val = new_text.to_float()
@@ -77,34 +83,35 @@ func _on_text_submitted(new_text: String) -> void:
 
 
 func _on_value_changed(v: float) -> void:
-	line_edit.text = str(v)
+	slider_value = v
 
 
 func _on_line_edit_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		var e = event as InputEventMouseButton
+	if mouse_draggable:
+		if event is InputEventMouseButton:
+			var e = event as InputEventMouseButton
+			
+			if e.pressed:
+				dragging_state = DraggingStates.CLICKED
+				drag_mouse_pos = e.global_position
+			
+			if not e.pressed and dragging_state == DraggingStates.DRAGGING:
+				dragging_state = DraggingStates.NONE
+				line_edit.editable = true
+				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+				Input.warp_mouse(drag_mouse_pos)
 		
-		if e.pressed:
-			dragging_state = DraggingStates.CLICKED
-			drag_mouse_pos = e.global_position
-		
-		if not e.pressed and dragging_state == DraggingStates.DRAGGING:
-			dragging_state = DraggingStates.NONE
-			line_edit.editable = true
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			Input.warp_mouse(drag_mouse_pos)
-	
-	if event is InputEventMouseMotion:
-		var e = event as InputEventMouseMotion
-		
-		if abs(e.global_position.x - drag_mouse_pos.x) > mouse_threshold and dragging_state == DraggingStates.CLICKED:
-			dragging_state = DraggingStates.DRAGGING
-			drag_mouse_pos = e.global_position
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-			line_edit.editable = false
-		
-		if dragging_state == DraggingStates.DRAGGING:
-			slider_value += e.relative.x * mouse_drag_scale * (max_value - min_value)
+		if event is InputEventMouseMotion:
+			var e = event as InputEventMouseMotion
+			
+			if abs(e.global_position.x - drag_mouse_pos.x) > mouse_threshold and dragging_state == DraggingStates.CLICKED:
+				dragging_state = DraggingStates.DRAGGING
+				drag_mouse_pos = e.global_position
+				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+				line_edit.editable = false
+			
+			if dragging_state == DraggingStates.DRAGGING:
+				slider_value += e.relative.x * mouse_drag_scale * (max_value - min_value)
 
 
 func _resize() -> void:

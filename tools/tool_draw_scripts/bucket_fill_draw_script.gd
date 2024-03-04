@@ -8,7 +8,7 @@ func draw(
 		mouse_pos_from_hold: Vector2i,
 		fg_color: Color,
 		bg_color: Color,
-		modifiers: int,
+		modifiers: Dictionary,
 		) -> void:
 	
 	canvas.draw_pixels(canvas.get_fill_points(mouse_pos, settings.tolerance / 100.0, settings.cross_corners), fg_color, settings.blend)

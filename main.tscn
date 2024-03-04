@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c0j42cgttk8kf"]
+[gd_scene load_steps=28 format=3 uid="uid://c0j42cgttk8kf"]
 
 [ext_resource type="Theme" uid="uid://5210gar13ap3" path="res://main.theme" id="1_ckeee"]
 [ext_resource type="Script" path="res://gui/triple_split_container.gd" id="1_ojnui"]
@@ -16,8 +16,12 @@
 [ext_resource type="Script" path="res://add_layer_button.gd" id="7_uawcc"]
 [ext_resource type="Resource" uid="uid://bno11fcjlg8ly" path="res://tools/tool_resources/line.tres" id="8_8j58j"]
 [ext_resource type="Resource" uid="uid://cyb3g0fgdq34c" path="res://tools/tool_resources/bucket_fill.tres" id="10_h563c"]
+[ext_resource type="Texture2D" uid="uid://dnlrjyekvqeab" path="res://icons/tool_circle.png" id="12_a44ef"]
 [ext_resource type="Shader" path="res://gui/grid.gdshader" id="13_jbabm"]
+[ext_resource type="Resource" uid="uid://byhxjjv13gvik" path="res://tools/tool_resources/circle.tres" id="13_qtt1e"]
+[ext_resource type="Texture2D" uid="uid://cjeancjrmi05c" path="res://icons/tool_rectangle.png" id="14_231ug"]
 [ext_resource type="Script" path="res://gui/canvas_focus.gd" id="15_byrsa"]
+[ext_resource type="Resource" uid="uid://cjulemfhtu5fr" path="res://tools/tool_resources/rectangle.tres" id="15_o6anl"]
 [ext_resource type="Script" path="res://gui/opacity_slider.gd" id="18_ixdwu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w3bdt"]
@@ -133,27 +137,65 @@ expand_icon = true
 script = ExtResource("4_s7tdj")
 tool = ExtResource("10_h563c")
 
+[node name="Circle" type="Button" parent="VBoxContainer/TripleSplitContainer/SplitContainer/PanelContainer/ToolTray"]
+texture_filter = 4
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+icon = ExtResource("12_a44ef")
+flat = true
+expand_icon = true
+script = ExtResource("4_s7tdj")
+tool = ExtResource("13_qtt1e")
+
+[node name="Rectangle" type="Button" parent="VBoxContainer/TripleSplitContainer/SplitContainer/PanelContainer/ToolTray"]
+texture_filter = 4
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+icon = ExtResource("14_231ug")
+flat = true
+expand_icon = true
+script = ExtResource("4_s7tdj")
+tool = ExtResource("15_o6anl")
+
 [node name="ToolSettingsContainer" type="PanelContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer"]
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ToolLabelContainer" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ToolNameLabel" type="Label" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "No tool selected"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ToolLabelContainer" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_w3bdt")
 
-[node name="ToolValueContainer" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/HBoxContainer"]
+[node name="ToolValueContainer" type="VBoxContainer" parent="VBoxContainer/TripleSplitContainer/SplitContainer/ToolSettingsContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

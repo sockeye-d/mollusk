@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Tool" load_steps=6 format=3 uid="uid://cjulemfhtu5fr"]
+
+[ext_resource type="Texture2D" uid="uid://cjeancjrmi05c" path="res://icons/tool_rectangle.png" id="1_6y8w2"]
+[ext_resource type="Script" path="res://tools/tool.gd" id="1_wl0be"]
+[ext_resource type="Script" path="res://tools/tool_settings/checkbox_tool_setting.gd" id="3_t8bdc"]
+
+[sub_resource type="Resource" id="Resource_g58q4"]
+script = ExtResource("3_t8bdc")
+default_value = false
+label = "filled"
+
+[sub_resource type="Resource" id="Resource_iy21n"]
+script = ExtResource("3_t8bdc")
+default_value = true
+label = "blend"
+
+[resource]
+script = ExtResource("1_wl0be")
+icon = ExtResource("1_6y8w2")
+name = "Draw rectangle"
+tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([SubResource("Resource_g58q4"), SubResource("Resource_iy21n")])
+activation_mode = 2

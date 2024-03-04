@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Tool" load_steps=7 format=3 uid="uid://byhxjjv13gvik"]
+
+[ext_resource type="Script" path="res://tools/tool_draw_scripts/circle_draw_script.gd" id="1_fkn3b"]
+[ext_resource type="Script" path="res://tools/tool.gd" id="1_hp8u2"]
+[ext_resource type="Texture2D" uid="uid://dnlrjyekvqeab" path="res://icons/tool_circle.png" id="1_xlrev"]
+[ext_resource type="Script" path="res://tools/tool_settings/checkbox_tool_setting.gd" id="3_h2u80"]
+
+[sub_resource type="Resource" id="Resource_w21ar"]
+script = ExtResource("3_h2u80")
+default_value = false
+label = "filled"
+
+[sub_resource type="Resource" id="Resource_5fdrf"]
+script = ExtResource("3_h2u80")
+default_value = true
+label = "blend"
+
+[resource]
+script = ExtResource("1_hp8u2")
+icon = ExtResource("1_xlrev")
+name = "Draw circle"
+tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([SubResource("Resource_w21ar"), SubResource("Resource_5fdrf")])
+activation_mode = 2
+draw_script = ExtResource("1_fkn3b")

@@ -1,9 +1,16 @@
 extends Node
 
 
+const MOD_KEYS: Array[String] = [
+	"ctrl",
+	"shift",
+	"alt",
+]
+
 var color_picker: DualColorPicker
 var tool_label_container: Control
 var tool_value_container: Control
+var tool_name_label: Label
 var canvas_focus: Control
 var info_bar_left: Dictionary = {}
 var info_bar_right: Dictionary = {}
@@ -14,6 +21,7 @@ func _ready() -> void:
 		color_picker = Nodes.get_unique_node("ColorPicker")
 		tool_label_container = Nodes.get_unique_node("ToolLabelContainer")
 		tool_value_container = Nodes.get_unique_node("ToolValueContainer")
+		tool_name_label = Nodes.get_unique_node("ToolNameLabel")
 		canvas_focus = Nodes.get_unique_node("CanvasFocus")
 
 
@@ -24,13 +32,11 @@ var mouse_pos_from_hold: Vector2i
 var should_draw: bool
 var pre_draw_image_data: PackedByteArray
 
-# Stores a BitField<KeyModifierMask>
-var modifiers: int
-
 
 var tool: Tool:
 	set(value):
 		tool = value
+		tool_name_label.text = value.name
 		_add_tool_settings(tool.tool_settings)
 	get:
 		return tool
@@ -81,7 +87,6 @@ func _process(delta: float) -> void:
 	if not Layers.selected_layer == null and Input.is_action_just_pressed("export"):
 		print(Layers.as_image().save_png("user://image.png"))
 
-
 func draw() -> void:
 	tool.draw(
 			Layers.selected_layer.canvas,
@@ -90,7 +95,7 @@ func draw() -> void:
 			mouse_pos_from_hold,
 			color_picker.fg,
 			color_picker.bg,
-			modifiers,
+			_get_keys_pressed(MOD_KEYS),
 			)
 	Layers.selected_layer.update()
 
@@ -119,7 +124,8 @@ func _add_tool_settings(settings: Array[ToolSetting]) -> void:
 			label.custom_minimum_size.y = control.size.y
 
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventWithModifiers:
-		var e = event as InputEventWithModifiers
-		modifiers = e.get_modifiers_mask()
+func _get_keys_pressed(keys: Array[String]) -> Dictionary:
+	var dict: Dictionary = {}
+	for key in keys:
+		dict.merge({"%s_pressed" % key: Input.is_action_pressed("mod_%s" % key)})
+	return dict

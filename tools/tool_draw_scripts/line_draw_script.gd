@@ -8,7 +8,15 @@ func draw(
 		mouse_pos_from_hold: Vector2i,
 		fg_color: Color,
 		bg_color: Color,
-		modifiers: int,
+		modifiers: Dictionary,
 		) -> void:
 	
-	canvas.draw_pixels(canvas._get_line_points(mouse_pos_from_hold, mouse_pos), fg_color, settings.blend)
+	var a: Vector2i = mouse_pos_from_hold
+	var b: Vector2i = mouse_pos
+	
+	if modifiers.shift_pressed:
+		var ang: float = snappedf(Vector2(b - a).angle(), TAU / settings.angle_steps)
+		var len: float = (b - a).length()
+		b = a + Vector2i(Vector2.from_angle(ang) * len)
+	
+	canvas.draw_pixels(canvas.get_line_points(a, b), fg_color, settings.blend)

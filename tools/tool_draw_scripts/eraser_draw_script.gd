@@ -8,7 +8,7 @@ func draw(
 		mouse_pos_from_hold: Vector2i,
 		fg_color: Color,
 		bg_color: Color,
-		modifiers: int,
+		modifiers: Dictionary,
 		) -> void:
 	
 	var points = canvas._get_line_points(mouse_pos, mouse_pos_last)

@@ -8,10 +8,10 @@ func draw(
 		mouse_pos_from_hold: Vector2i,
 		fg_color: Color,
 		bg_color: Color,
-		modifiers: int,
+		modifiers: Dictionary,
 		) -> void:
 	
-	var points = canvas._get_line_points(mouse_pos, mouse_pos_last)
+	var points = canvas.get_line_points(mouse_pos, mouse_pos_last)
 	if points.size() > 1:
 		points.remove_at(0)
 	canvas.draw_pixels(points, fg_color, settings.blend)

@@ -1,19 +1,30 @@
-[gd_resource type="Resource" script_class="Tool" load_steps=6 format=3 uid="uid://bno11fcjlg8ly"]
+[gd_resource type="Resource" script_class="Tool" load_steps=8 format=3 uid="uid://bno11fcjlg8ly"]
 
 [ext_resource type="Script" path="res://tools/tool_draw_scripts/line_draw_script.gd" id="1_84oeq"]
 [ext_resource type="Script" path="res://tools/tool.gd" id="1_xk77f"]
 [ext_resource type="Texture2D" uid="uid://c1hbtn863wcje" path="res://icons/tool_line.png" id="2_iwg6p"]
 [ext_resource type="Script" path="res://tools/tool_settings/checkbox_tool_setting.gd" id="4_vwddk"]
+[ext_resource type="Script" path="res://tools/tool_settings/slider_tool_setting.gd" id="5_nqq50"]
 
 [sub_resource type="Resource" id="Resource_ts7s8"]
 script = ExtResource("4_vwddk")
 default_value = true
 label = "blend"
 
+[sub_resource type="Resource" id="Resource_lt3sv"]
+script = ExtResource("5_nqq50")
+min_value = 4.0
+max_value = 12.0
+step = 1.0
+default_value = 8.0
+mouse_draggable = false
+mouse_drag_scale = 0.001
+label = "angle_steps"
+
 [resource]
 script = ExtResource("1_xk77f")
 icon = ExtResource("2_iwg6p")
 name = "Line"
-tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([SubResource("Resource_ts7s8")])
+tool_settings = Array[Resource("res://tools/tool_settings/tool_setting.gd")]([SubResource("Resource_ts7s8"), SubResource("Resource_lt3sv")])
 activation_mode = 2
 draw_script = ExtResource("1_84oeq")

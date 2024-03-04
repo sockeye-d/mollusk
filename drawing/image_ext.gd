@@ -72,19 +72,19 @@ func erase_pixels(ps: Array[Vector2i], strength: float) -> void:
 
 
 func draw_line(p0: Vector2i, p1: Vector2i, color: Color, blend: bool = false) -> void:
-	draw_pixels(_get_line_points(p0, p1), color, blend)
+	draw_pixels(get_line_points(p0, p1), color, blend)
 
 
 func draw_line_thick(p0: Vector2i, p1: Vector2i, thickness: int, color: Color) -> void:
 	var offset_vec: Vector2 = Vector2(p1 - p0).normalized().orthogonal() * float(thickness - 1) * 0.5
-	var p0s: Array[Vector2i] = _get_line_points(Vector2i(Vector2(p0) - offset_vec), Vector2i(Vector2(p0) + offset_vec), true)
-	var p1s: Array[Vector2i] = _get_line_points(Vector2i(Vector2(p1) - offset_vec), Vector2i(Vector2(p1) + offset_vec), true)
+	var p0s: Array[Vector2i] = get_line_points(Vector2i(Vector2(p0) - offset_vec), Vector2i(Vector2(p0) + offset_vec), true)
+	var p1s: Array[Vector2i] = get_line_points(Vector2i(Vector2(p1) - offset_vec), Vector2i(Vector2(p1) + offset_vec), true)
 	for i in p0s.size():
 		if i < p1s.size():
 			draw_line(p0s[i], p1s[i], color)
 
 
-func draw_circle(c: Vector2i, r: int, color: Color, blend: bool = false) -> void:
+func draw_filled_circle(c: Vector2i, r: int, color: Color, blend: bool = false) -> void:
 	for x in r * 2 + 1:
 		for y in r * 2 + 1:
 			var p: Vector2i = Vector2i(x - r, y - r)
@@ -114,14 +114,9 @@ func get_fill_points(p: Vector2i, tolerance: float, do_corners: bool = false) ->
 					queue.push_front(n + OFFSETS[do_corners][i])
 	
 	return arr
-#endregion
-
-#region Util code
-func _in_box(p: Vector2i, p_min: Vector2i, p_max: Vector2i):
-	return p.x >= p_min.x and p.x < p_max.x and p.y >= p_min.y and p.y < p_max.y
 
 
-func _get_line_points(p0: Vector2i, p1: Vector2i, double_pixels: bool = false) -> Array[Vector2i]:
+func get_line_points(p0: Vector2i, p1: Vector2i, double_pixels: bool = false) -> Array[Vector2i]:
 	var arr: Dictionary = {}
 	var p: Vector2i = p0;
 	var d: Vector2i = abs(p1 - p0)
@@ -146,6 +141,62 @@ func _get_line_points(p0: Vector2i, p1: Vector2i, double_pixels: bool = false) -
 	var arr_typed: Array[Vector2i] = []
 	arr_typed.assign(arr.keys())
 	return arr_typed
+
+
+func get_circle_edge_points(center: Vector2i, r: int) -> Array[Vector2i]:
+	var arr: Array[Vector2i] = []
+	var t1 = r / 16
+	var p = Vector2i(r, 0)
+	while p.x >= p.y:
+		for i in 2:
+			for j in 4:
+				arr.append(center + p)
+				p = Vector2i(p.y, -p.x)
+			p.x = -p.x
+		
+		p.y += 1
+		t1 += p.y
+		var t2 = t1 - p.x
+		if t2 >= 0:
+			t1 = t2
+			p.x -= 1
+	return arr
+
+
+func get_ellipse_edge_points(center: Vector2i, r: Vector2i) -> Array[Vector2i]:
+	# http://members.chello.at/%7Eeasyfilter/Bresenham.pdf
+	r = abs(r)
+	var arr: Array[Vector2i] = []
+	var p: Vector2i = Vector2i(-r.x, 0)
+	var e2: int = r.y * r.y
+	var err: int = p.x * (2.0 * e2 + p.x) + e2
+	
+	while p.x <= 0:
+		arr.append(center + Vector2i(p) * Vector2i( 1,  1))
+		arr.append(center + Vector2i(p) * Vector2i(-1,  1))
+		arr.append(center + Vector2i(p) * Vector2i( 1, -1))
+		arr.append(center + Vector2i(p) * Vector2i(-1, -1))
+		
+		e2 = 2.0 * err
+		if e2 >= (p.x * 2.0 + 1.0) * r.y * r.y:
+			p.x += 1
+			err += (p.x * 2.0 + 1.0) * r.y * r.y
+		
+		if e2 <= (p.y * 2.0 + 1.0) * r.x * r.x:
+			p.y += 1
+			err += (p.y * 2.0 + 1.0) * r.x * r.x
+		
+	
+	while p.y < r.y:
+		p.y += 1
+		arr.append(center + Vector2i(p) * Vector2i(0,  1))
+		arr.append(center + Vector2i(p) * Vector2i(0, -1))
+	return arr
+#endregion
+
+#region Util code
+func _in_box(p: Vector2i, p_min: Vector2i, p_max: Vector2i):
+	return p.x >= p_min.x and p.x < p_max.x and p.y >= p_min.y and p.y < p_max.y
 
 
 func _color_difference(a: Color, b: Color) -> float:

@@ -42,7 +42,7 @@ func draw(
 		mouse_pos_from_hold: Vector2i,
 		fg_color: Color,
 		bg_color: Color,
-		modifiers: int,
+		modifiers: Dictionary,
 		) -> void:
 	
 	if _script_obj.get_script() == null:
