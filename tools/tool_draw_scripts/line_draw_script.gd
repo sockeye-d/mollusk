@@ -16,7 +16,7 @@ func draw(
 	
 	if modifiers.shift_pressed:
 		var ang: float = snappedf(Vector2(b - a).angle(), TAU / settings.angle_steps)
-		var len: float = (b - a).length()
-		b = a + Vector2i(Vector2.from_angle(ang) * len)
+		var length: float = (b - a).length()
+		b = a + Vector2i(Vector2.from_angle(ang) * length)
 	
 	canvas.draw_pixels(canvas.get_line_points(a, b), fg_color, settings.blend)

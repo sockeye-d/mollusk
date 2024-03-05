@@ -104,14 +104,14 @@ func get_fill_points(p: Vector2i, tolerance: float, do_corners: bool = false) ->
 	var queue: Array = [p]
 	
 	while queue.size() > 0:
-		var n: Vector2i = queue.pop_front()
+		var n: Vector2i = queue.pop_back()
 		if _in_box(n, Vector2i.ZERO, size):
 			var color_diff = _color_difference(image.get_pixelv(n), this_pixel_color)
 			if color_diff < tolerance and not arr.has(n):
 				arr.append(n)
 				
 				for i in OFFSETS[do_corners].size():
-					queue.push_front(n + OFFSETS[do_corners][i])
+					queue.push_back(n + OFFSETS[do_corners][i])
 	
 	return arr
 
@@ -145,7 +145,7 @@ func get_line_points(p0: Vector2i, p1: Vector2i, double_pixels: bool = false) ->
 
 func get_circle_edge_points(center: Vector2i, r: int) -> Array[Vector2i]:
 	var arr: Array[Vector2i] = []
-	var t1 = r / 16
+	var t1: int = r / 16
 	var p = Vector2i(r, 0)
 	while p.x >= p.y:
 		for i in 2:
@@ -169,32 +169,32 @@ func get_ellipse_edge_points(center: Vector2i, r: Vector2i) -> Array[Vector2i]:
 	var arr: Array[Vector2i] = []
 	var p: Vector2i = Vector2i(-r.x, 0)
 	var e2: int = r.y * r.y
-	var err: int = p.x * (2.0 * e2 + p.x) + e2
+	var err: int = p.x * (2 * e2 + p.x) + e2
 	
 	while p.x <= 0:
-		arr.append(center + Vector2i(p) * Vector2i( 1,  1))
-		arr.append(center + Vector2i(p) * Vector2i(-1,  1))
-		arr.append(center + Vector2i(p) * Vector2i( 1, -1))
-		arr.append(center + Vector2i(p) * Vector2i(-1, -1))
+		arr.append(center + p * Vector2i( 1,  1))
+		arr.append(center + p * Vector2i(-1,  1))
+		arr.append(center + p * Vector2i( 1, -1))
+		arr.append(center + p * Vector2i(-1, -1))
 		
-		e2 = 2.0 * err
-		if e2 >= (p.x * 2.0 + 1.0) * r.y * r.y:
+		e2 = 2 * err
+		if e2 >= (p.x * 2 + 1) * r.y * r.y:
 			p.x += 1
-			err += (p.x * 2.0 + 1.0) * r.y * r.y
+			err += (p.x * 2 + 1) * r.y * r.y
 		
-		if e2 <= (p.y * 2.0 + 1.0) * r.x * r.x:
+		if e2 <= (p.y * 2 + 1) * r.x * r.x:
 			p.y += 1
-			err += (p.y * 2.0 + 1.0) * r.x * r.x
+			err += (p.y * 2 + 1) * r.x * r.x
 		
 	
 	while p.y < r.y:
 		p.y += 1
-		arr.append(center + Vector2i(p) * Vector2i(0,  1))
-		arr.append(center + Vector2i(p) * Vector2i(0, -1))
+		arr.append(center + p * Vector2i(0,  1))
+		arr.append(center + p * Vector2i(0, -1))
 	return arr
 
 
-func get_rectangle_edge_points(center: Vector2i, size: Vector2i) -> Array[Vector2i]:
+func get_rectangle_edge_points(center: Vector2i, dim: Vector2i) -> Array[Vector2i]:
 	var arr: Array[Vector2i] = []
 	
 	

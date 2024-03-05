@@ -1,9 +1,6 @@
 extends Control
 
 
-signal lost_focus
-
-
 var focused: bool
 var mouse_inside: bool
 
@@ -22,4 +19,3 @@ func _on_focus_entered() -> void:
 
 func _on_mouse_exited() -> void:
 	mouse_inside = false
-
