@@ -96,24 +96,25 @@ func draw_filled_circle(c: Vector2i, r: int, color: Color, blend: bool = false) 
 
 
 func get_fill_points(p: Vector2i, tolerance: float, do_corners: bool = false) -> Array[Vector2i]:
-	if not _in_box(p, Vector2i.ZERO, size):
-		return []
-	
 	var this_pixel_color: Color = image.get_pixelv(p)
-	var arr: Array[Vector2i] = []
-	var queue: Array = [p]
+	# Uses a dictionary instead of an array because the dictionary's .has(n) check is *much* faster
+	var visited: Dictionary = {}
+	var queue: Array[Vector2i] = [p]
 	
 	while queue.size() > 0:
 		var n: Vector2i = queue.pop_back()
-		if _in_box(n, Vector2i.ZERO, size):
-			var color_diff = _color_difference(image.get_pixelv(n), this_pixel_color)
-			if color_diff < tolerance and not arr.has(n):
-				arr.append(n)
-				
-				for i in OFFSETS[do_corners].size():
-					queue.push_back(n + OFFSETS[do_corners][i])
+		if not visited.has(n):
+			if _in_box(n, Vector2i.ZERO, size):
+				var color_diff = _color_difference(image.get_pixelv(n), this_pixel_color)
+				if color_diff < tolerance:
+					visited.merge({n: null})
+					for i in OFFSETS[do_corners].size():
+						queue.push_back(n + OFFSETS[do_corners][i])
 	
-	return arr
+	# Type the dictionary keys
+	var arr_typed: Array[Vector2i] = []
+	arr_typed.assign(visited.keys())
+	return arr_typed
 
 
 func get_line_points(p0: Vector2i, p1: Vector2i, double_pixels: bool = false) -> Array[Vector2i]:
