@@ -11,24 +11,33 @@ func draw(
 		modifiers: Dictionary,
 		) -> void:
 	
-	var a = mouse_pos_from_hold
-	var b = mouse_pos
+	var a: Vector2 = mouse_pos_from_hold
+	var b: Vector2 = mouse_pos
 	
 	if modifiers.shift_pressed:
 		b = b - a
 		b = a + Vector2i.ONE * max(b.x, b.y)
 	
-	var c: Vector2i
-	var l: Vector2i
+	var c: Vector2
+	var l: Vector2
 	
 	if modifiers.ctrl_pressed:
 		c = a
 		l = a - b
 	else:
-		c = (b + a) / 2
-		l = (b - a) / 2
+		c = (b + a) / 2.0
+		l = (b - a) / 2.0
+	var points: Array[Vector2i]
 	
 	if modifiers.shift_pressed:
-		canvas.draw_pixels(canvas.get_circle_edge_points(c, l.x), fg_color, settings.blend)
+		if settings.filled:
+			points = canvas.get_circle_fill_points(c, l.x)
+		else:
+			points = canvas.get_circle_edge_points(c, l.x)
 	else:
-		canvas.draw_pixels(canvas.get_ellipse_edge_points(c, l), fg_color, settings.blend)
+		if settings.filled:
+			points = canvas.get_ellipse_fill_points(c, l)
+		else:
+			points = canvas.get_ellipse_edge_points(c, l)
+	
+	canvas.draw_pixels(points, fg_color, settings.blend)

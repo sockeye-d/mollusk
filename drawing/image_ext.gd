@@ -84,17 +84,6 @@ func draw_line_thick(p0: Vector2i, p1: Vector2i, thickness: int, color: Color) -
 			draw_line(p0s[i], p1s[i], color)
 
 
-func draw_filled_circle(c: Vector2i, r: int, color: Color, blend: bool = false) -> void:
-	for x in r * 2 + 1:
-		for y in r * 2 + 1:
-			var p: Vector2i = Vector2i(x - r, y - r)
-			if (p as Vector2 + Vector2.ONE * 0.5).length_squared() < r*r:
-				if blend:
-					draw_pixel(c + p, color)
-				else:
-					image.set_pixelv(c + p, color)
-
-
 func get_fill_points(p: Vector2i, tolerance: float, do_corners: bool = false) -> Array[Vector2i]:
 	var this_pixel_color: Color = image.get_pixelv(p)
 	# Uses a dictionary instead of an array because the dictionary's .has(n) check is *much* faster
@@ -145,6 +134,7 @@ func get_line_points(p0: Vector2i, p1: Vector2i, double_pixels: bool = false) ->
 
 
 func get_circle_edge_points(center: Vector2i, r: int) -> Array[Vector2i]:
+	r = abs(r)
 	var arr: Array[Vector2i] = []
 	var t1: int = r / 16
 	var p = Vector2i(r, 0)
@@ -161,6 +151,17 @@ func get_circle_edge_points(center: Vector2i, r: int) -> Array[Vector2i]:
 		if t2 >= 0:
 			t1 = t2
 			p.x -= 1
+	return arr
+
+
+func get_circle_fill_points(c: Vector2i, r: int) -> Array[Vector2i]:
+	r = abs(r)
+	var arr: Array[Vector2i] = []
+	for x in r * 2 + 1:
+		for y in r * 2 + 1:
+			var p: Vector2i = Vector2i(x - r, y - r)
+			if (p as Vector2).length() < r - 0.5:
+				arr.append(c + p)
 	return arr
 
 
@@ -192,6 +193,17 @@ func get_ellipse_edge_points(center: Vector2i, r: Vector2i) -> Array[Vector2i]:
 		p.y += 1
 		arr.append(center + p * Vector2i(0,  1))
 		arr.append(center + p * Vector2i(0, -1))
+	return arr
+
+
+func get_ellipse_fill_points(center: Vector2i, r: Vector2i) -> Array[Vector2i]:
+	r = r.abs()
+	var arr: Array[Vector2i] = []
+	for x in r.x * 2 + 1:
+		for y in r.y * 2 + 1:
+			var p: Vector2i = Vector2i(x, y) - r
+			if ((Vector2(p)) / Vector2(r)).length() < 0.99:
+				arr.append(center + p)
 	return arr
 
 
