@@ -116,7 +116,7 @@ func as_image() -> Image:
 
 func _update_layer_selected() -> void:
 	layer_container.print_tree_pretty()
-	print(layer_container.get_child_count())
+	layer_container.get_child_count()
 	if layer_container.get_child_count() == 0:
 		return
 	

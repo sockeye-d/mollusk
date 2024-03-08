@@ -207,10 +207,28 @@ func get_ellipse_fill_points(center: Vector2i, r: Vector2i) -> Array[Vector2i]:
 	return arr
 
 
-func get_rectangle_edge_points(center: Vector2i, dim: Vector2i) -> Array[Vector2i]:
+func get_rectangle_edge_points(center: Vector2i, r: Vector2i) -> Array[Vector2i]:
+	r = r.abs()
 	var arr: Array[Vector2i] = []
 	
+	for x in range(-r.x, r.x + 1, 1):
+		arr.append(center + Vector2i(x,  r.y))
+		arr.append(center + Vector2i(x, -r.y))
 	
+	for y in range(-r.y + 1, r.y, 1):
+		arr.append(center + Vector2i( r.x, y))
+		arr.append(center + Vector2i(-r.x, y))
+	
+	return arr
+
+
+func get_rectangle_fill_points(center: Vector2i, r: Vector2i) -> Array[Vector2i]:
+	r = r.abs()
+	var arr: Array[Vector2i] = []
+	
+	for x in range(-r.x, r.x, 1):
+		for y in range(-r.y, r.y, 1):
+			arr.append(center + Vector2i(x, y))
 	
 	return arr
 #endregion
